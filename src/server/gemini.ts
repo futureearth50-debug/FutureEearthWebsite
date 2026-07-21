@@ -10,6 +10,73 @@ import { env, requireEnv } from "./env";
 
 const API_ROOT = "https://generativelanguage.googleapis.com/v1beta";
 
+// Statuses that mean "try again" rather than "you did something wrong": request
+// timeout, rate limit, and the 5xx family Gemini returns under load spikes
+// (503 "model is currently experiencing high demand" is the common one). 4xx
+// like 400/404 are NOT here — retrying them just wastes time.
+const TRANSIENT_STATUS = new Set([408, 429, 500, 502, 503, 504]);
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Number of retries after the first attempt (GEMINI_MAX_RETRIES, default 2, capped 5). */
+function maxRetries(): number {
+  const raw = Number(env("GEMINI_MAX_RETRIES", "2"));
+  return Number.isFinite(raw) && raw >= 0 ? Math.min(Math.floor(raw), 5) : 2;
+}
+
+/** Parse a `Retry-After` header (delta-seconds or HTTP date) into ms, if present. */
+function parseRetryAfter(header: string | null): number | null {
+  if (!header) return null;
+  const secs = Number(header);
+  if (Number.isFinite(secs)) return Math.max(0, secs * 1000);
+  const when = Date.parse(header);
+  if (!Number.isNaN(when)) return Math.max(0, when - Date.now());
+  return null;
+}
+
+/** Backoff for retry `attempt` (0-based): honor Retry-After, else exponential + jitter. */
+function backoffDelay(attempt: number, retryAfter: string | null): number {
+  const ra = parseRetryAfter(retryAfter);
+  if (ra != null) return Math.min(ra, 8000);
+  const base = 500 * 2 ** attempt; // 500ms, 1s, 2s, …
+  return Math.min(base + Math.random() * 250, 6000);
+}
+
+/**
+ * POST a JSON body to Gemini, retrying on transient failures (network errors and
+ * 408/429/5xx) with exponential backoff. Returns the final `Response` — which may
+ * still be non-OK for a non-transient error (e.g. 400/404); callers handle that.
+ * This is what keeps a one-off provider "high demand" spike from surfacing to the
+ * visitor as a broken assistant.
+ */
+async function geminiFetch(url: string, body: string): Promise<Response> {
+  const attempts = maxRetries() + 1;
+  let lastErr: unknown;
+  for (let i = 0; i < attempts; i++) {
+    const isLast = i === attempts - 1;
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body,
+      });
+    } catch (err) {
+      // Network-level failure (DNS, reset, timeout): retry if attempts remain.
+      lastErr = err;
+      if (isLast) throw err;
+      await sleep(backoffDelay(i, null));
+      continue;
+    }
+    if (res.ok || !TRANSIENT_STATUS.has(res.status) || isLast) return res;
+    // Transient status with retries left: drain the error body (frees the socket) and back off.
+    const retryAfter = res.headers.get("retry-after");
+    await safeText(res);
+    await sleep(backoffDelay(i, retryAfter));
+  }
+  throw lastErr ?? new Error("Gemini request failed after retries.");
+}
+
 type GeminiRole = "user" | "model";
 
 export interface GeminiTurn {
@@ -67,17 +134,17 @@ export async function streamText(
   const key = requireEnv("GEMINI_API_KEY");
   const url = `${API_ROOT}/models/${model()}:streamGenerateContent?alt=sse&key=${key}`;
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(
+  // Retry happens here, before we start reading the stream body — safe to replay.
+  const res = await geminiFetch(
+    url,
+    JSON.stringify(
       buildBody(system, turns, {
         temperature: opts.temperature ?? 0.7,
         maxOutputTokens: opts.maxOutputTokens ?? 1024,
         topP: 0.95,
       }),
     ),
-  });
+  );
 
   if (!res.ok || !res.body) {
     const detail = await safeText(res);
@@ -148,10 +215,9 @@ export async function generateJson<T>(
   const key = requireEnv("GEMINI_API_KEY");
   const url = `${API_ROOT}/models/${model()}:generateContent?key=${key}`;
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(
+  const res = await geminiFetch(
+    url,
+    JSON.stringify(
       buildBody(system, turns, {
         temperature: 0.3,
         maxOutputTokens: 2048,
@@ -159,7 +225,7 @@ export async function generateJson<T>(
         responseSchema,
       }),
     ),
-  });
+  );
 
   if (!res.ok) {
     const detail = await safeText(res);

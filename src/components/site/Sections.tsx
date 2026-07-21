@@ -122,8 +122,8 @@ export function CTARibbon({
                 <p className="mt-5" style={{ color: "rgba(255,255,255,0.72)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 560 }}>{sub}</p>
               </div>
               <div className="lg:justify-self-end">
-                <Link to={isRtl ? "/ar/contact" : "/contact"} className="fe-btn fe-btn-primary" style={{ padding: "1.1rem 1.9rem", fontSize: "1rem" }}>
-                  {cta} <ArrowRight size={18} className="fe-flip-x" />
+                <Link to={isRtl ? "/ar/contact" : "/contact"} className="fe-btn fe-btn-primary fe-ribbon-cta">
+                  {cta} <ArrowRight size={18} className="fe-flip-x shrink-0" />
                 </Link>
               </div>
             </div>

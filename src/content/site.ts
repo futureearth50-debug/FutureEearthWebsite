@@ -258,7 +258,126 @@ export const home = {
     ribbonTitle: "انقل منشأتك إلى البنية التحتية المتجددة اليوم",
     ribbonSub:
       "ابدأ تحليلاً شاملاً لاستهلاك الطاقة ومعاينة هندسية مع فريقنا المعتمد لتحسين النفقات التشغيلية",
-    ribbonCta: "طلب تحليل مخصص لاستهلاك الطاقة",
+    ribbonCta: "طلب تحليل مخصص",
+  },
+};
+
+// -----------------------------------------------------------------------------
+// HOME — additional landing sections (Solutions · Products · Services · CTA)
+// Section-level copy only; product/solution card data is reused from the
+// `products` and `solar` dictionaries below so there is a single source of truth.
+// -----------------------------------------------------------------------------
+
+export const homeSections = {
+  en: {
+    solar: {
+      eyebrow: "Solar Energy Solutions",
+      title: "Solar Solutions Engineered for Every Site",
+      lead: "From commercial rooftops to open desert land and intelligent hybrid microgrids — explore the infrastructure we design, build and connect across the Kingdom.",
+      explore: "Explore Solution",
+      viewAll: "View All Solutions",
+    },
+    products: {
+      eyebrow: "Featured Products",
+      title: "Commercial and Industrial Energy Storage",
+      lead: "From all-in-one cabinets to stackable modules and fully hybrid architectures — the SAV lithium systems Future Earth engineers and deploys across the Kingdom.",
+      learnMore: "Learn More",
+      viewAll: "View All Products",
+    },
+    services: {
+      eyebrow: "Our Services",
+      title: "Full-Lifecycle Engineering Services",
+      lead: "From the first structural survey to decades of monitored operation, Future Earth governs every stage of your energy asset.",
+      viewAll: "Explore All Services",
+      items: [
+        {
+          t: "Installation",
+          d: "Turnkey EPC installation from structural survey to grid interconnection, delivered by certified crews.",
+        },
+        {
+          t: "Maintenance",
+          d: "Scheduled preventative maintenance, professional cleaning cycles and electrical testing to sustain peak yield.",
+        },
+        {
+          t: "Consultation",
+          d: "Technical energy consultation and facility assessment to size the right system for your load profile.",
+        },
+        {
+          t: "System Design",
+          d: "Precise system modeling with load and wind analysis, and engineered documentation for safe long-term deployment.",
+        },
+        {
+          t: "Monitoring",
+          d: "24/7 smart monitoring of every panel and inverter in real time to prevent sudden performance drops.",
+        },
+        {
+          t: "Technical Support",
+          d: "Rapid certified field response and warranty management keeping your assets compliant for up to 25 years.",
+        },
+      ],
+    },
+    contactCta: {
+      eyebrow: "Let's Begin",
+      title: "Ready to Start Your Solar Journey?",
+      sub: "Connect with our engineering team for a free facility assessment and a proposal tailored to your operation.",
+      contact: "Contact Us",
+      consult: "Request a Free Consultation",
+    },
+  },
+  ar: {
+    solar: {
+      eyebrow: "حلول الطاقة الشمسية",
+      title: "حلول شمسية مصممة هندسياً لكل موقع",
+      lead: "من الأسطح التجارية إلى الأراضي الصحراوية المفتوحة والشبكات الهجينة الذكية — استكشف البنية التحتية التي نصممها وننفذها ونربطها في مختلف أنحاء المملكة.",
+      explore: "استكشف الحل",
+      viewAll: "استعراض جميع الحلول",
+    },
+    products: {
+      eyebrow: "منتجات مختارة",
+      title: "تخزين الطاقة للقطاعين التجاري والصناعي",
+      lead: "من الكبائن المتكاملة إلى الوحدات القابلة للتكديس والأنظمة الهجينة بالكامل — أنظمة الليثيوم من SAV التي تهندسها فيوتشر إيرث وتنشرها في مختلف أنحاء المملكة.",
+      learnMore: "اعرف المزيد",
+      viewAll: "استعراض جميع المنتجات",
+    },
+    services: {
+      eyebrow: "خدماتنا",
+      title: "خدمات هندسية لدورة الحياة الكاملة",
+      lead: "من أول معاينة إنشائية وحتى عقود من التشغيل المراقَب، تدير فيوتشر إيرث كل مرحلة من مراحل أصل الطاقة الخاص بك.",
+      viewAll: "استكشف جميع الخدمات",
+      items: [
+        {
+          t: "التركيب",
+          d: "تركيب متكامل بنظام EPC من المعاينة الإنشائية حتى ربط الشبكة، ينفذه فريق معتمد.",
+        },
+        {
+          t: "الصيانة",
+          d: "صيانة وقائية مجدولة ودورات تنظيف احترافية واختبارات كهربائية للحفاظ على أعلى إنتاجية.",
+        },
+        {
+          t: "الاستشارات",
+          d: "استشارة فنية للطاقة ومعاينة للمنشأة لتحديد النظام الأمثل وفق نمط استهلاكك.",
+        },
+        {
+          t: "تصميم الأنظمة",
+          d: "نمذجة دقيقة للأنظمة وتحليل الأحمال والرياح ووثائق هندسية معتمدة للنشر الآمن طويل الأمد.",
+        },
+        {
+          t: "المراقبة",
+          d: "مراقبة ذكية على مدار الساعة لكل لوح وعاكس في الوقت الفعلي لمنع أي انخفاض مفاجئ في الأداء.",
+        },
+        {
+          t: "الدعم الفني",
+          d: "استجابة ميدانية سريعة معتمدة وإدارة الضمانات للحفاظ على أصولك ممتثلة حتى 25 عاماً.",
+        },
+      ],
+    },
+    contactCta: {
+      eyebrow: "لنبدأ",
+      title: "هل أنت مستعد لبدء رحلتك نحو الطاقة المتجددة؟",
+      sub: "تواصل مع فريقنا الهندسي للحصول على معاينة مجانية للمنشأة وعرض مخصص لعملياتك.",
+      contact: "تواصل معنا",
+      consult: "اطلب استشارة مجانية",
+    },
   },
 };
 

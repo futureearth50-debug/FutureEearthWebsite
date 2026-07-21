@@ -7,6 +7,7 @@ import { Reveal, SplitHeadline } from "@/components/site/Reveal";
 import { StatCounter } from "@/components/site/StatCounter";
 import { LogoWall } from "@/components/site/LogoWall";
 import { CTARibbon } from "@/components/site/Sections";
+import { HomeSolarSolutions, HomeFeaturedProducts, HomeServices, HomeContactCTA } from "@/components/site/HomeSections";
 import { getLenis } from "@/lib/motion";
 
 import monogram from "@/assets/brand/future-earth-monogram.png";
@@ -153,6 +154,9 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {/* ==================== SOLAR ENERGY SOLUTIONS ==================== */}
+      <HomeSolarSolutions locale={locale} />
+
       {/* ==================== VERIFIED TRACK RECORD ==================== */}
       <section id="track-record" className="relative overflow-hidden fe-blueprint-dark fe-section" style={{ background: "var(--fe-grad-dark)", color: "white" }}>
         <div className="fe-glow-steel" />
@@ -201,6 +205,9 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {/* ==================== FEATURED PRODUCTS ==================== */}
+      <HomeFeaturedProducts locale={locale} />
+
       {/* ==================== VALUE & CERTIFICATIONS ==================== */}
       <section className="fe-section" style={{ background: "var(--fe-paper)" }}>
         <div className="fe-container">
@@ -233,8 +240,14 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {/* ==================== OUR SERVICES ==================== */}
+      <HomeServices locale={locale} />
+
       {/* Trusted-by logo wall */}
       <LogoWall locale={locale} />
+
+      {/* ==================== CONTACT CTA (compact) ==================== */}
+      <HomeContactCTA locale={locale} />
 
       {/* Conversion ribbon */}
       <CTARibbon locale={locale} title={c.ribbonTitle} sub={c.ribbonSub} cta={c.ribbonCta} />
