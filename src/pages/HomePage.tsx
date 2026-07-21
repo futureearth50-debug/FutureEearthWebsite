@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ArrowRight, ArrowDown, Building2, LandPlot, Network, BatteryCharging, Landmark, TrendingUp, BadgeCheck, ShieldCheck, Workflow } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { home, ui, type Locale } from "@/content/site";
@@ -8,6 +9,7 @@ import { LogoWall } from "@/components/site/LogoWall";
 import { CTARibbon } from "@/components/site/Sections";
 import { getLenis } from "@/lib/motion";
 
+import monogram from "@/assets/brand/future-earth-monogram.png";
 import heroImg from "@/assets/projects/rooftop-array-complex.webp";
 import villageImg from "@/assets/projects/rooftop-array-inspection.webp";
 import munajemImg from "@/assets/projects/rooftop-panel-install.webp";
@@ -42,7 +44,10 @@ export function HomePage({ locale }: { locale: Locale }) {
   return (
     <SiteLayout locale={locale}>
       {/* ============================ HERO ============================ */}
-      <section className="relative overflow-hidden fe-blueprint-dark" style={{ background: "var(--fe-navy)", color: "white", minHeight: "100svh", display: "flex", alignItems: "center", paddingBlock: "9rem 3rem" }}>
+      <section
+        className="relative overflow-hidden fe-blueprint-dark flex items-start lg:items-center min-h-[100svh] pt-24 pb-10 lg:pt-36 lg:pb-12"
+        style={{ background: "var(--fe-navy)", color: "white" }}
+      >
         <div className="absolute inset-0">
           <img src={heroImg} alt="Utility-scale rooftop solar array over a Riyadh industrial complex" className="w-full h-full object-cover" style={{ opacity: 0.38 }} />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(10,27,46,0.94) 0%, rgba(10,27,46,0.78) 42%, rgba(10,27,46,0.42) 100%)" }} />
@@ -74,26 +79,29 @@ export function HomePage({ locale }: { locale: Locale }) {
               </Reveal>
             </div>
 
-            {/* Right — floating credentials card */}
+            {/* Right — brand mark */}
             <Reveal delay={0.55}>
-              <div className="relative rounded-3xl p-7 md:p-8 fe-ticks" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(143,180,214,0.18)", WebkitBackdropFilter: "blur(12px)", backdropFilter: "blur(12px)" }}>
-                <div className="fe-mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--fe-steel)" }}>
-                  {isRtl ? "الاعتماد والقدرة" : "Credentials & Capacity"}
-                </div>
-                <div className="mt-6 space-y-6">
-                  {c.heroStats.map((s, i) => (
-                    <div key={i} className={i > 0 ? "pt-6" : ""} style={{ borderTop: i > 0 ? "1px solid rgba(255,255,255,0.09)" : undefined }}>
-                      <div className="flex items-baseline gap-2">
-                        <StatCounter value={s.value} suffix={s.suffix} unit={s.unit} label={s.label} tone="light" size="md" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-7 pt-5 flex flex-wrap gap-2" style={{ borderTop: "1px solid rgba(255,255,255,0.09)" }}>
-                  {["Ministry of Energy", "SEC", "ISO 9001 · 45001 · 14001"].map((b) => (
-                    <span key={b} className="fe-mono" style={{ fontSize: 11, padding: "5px 10px", borderRadius: 999, background: "rgba(143,180,214,0.12)", color: "var(--fe-steel)", border: "1px solid rgba(143,180,214,0.2)" }}>{b}</span>
-                  ))}
-                </div>
+              <div className="relative flex items-center justify-center" style={{ padding: "clamp(1rem,4vw,3rem)" }}>
+                <div
+                  className="absolute rounded-full"
+                  style={{
+                    inset: "10%",
+                    background: "radial-gradient(closest-side, rgba(245,166,35,0.20), transparent 72%)",
+                    filter: "blur(28px)",
+                  }}
+                />
+                <img
+                  src={monogram}
+                  alt="Future Earth Energy Systems"
+                  width={256}
+                  height={256}
+                  className="relative"
+                  style={{
+                    width: "clamp(220px,36vw,420px)",
+                    height: "auto",
+                    filter: "drop-shadow(0 24px 50px rgba(0,0,0,0.4))",
+                  }}
+                />
               </div>
             </Reveal>
           </div>

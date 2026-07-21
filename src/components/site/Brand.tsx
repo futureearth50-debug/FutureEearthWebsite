@@ -18,7 +18,7 @@ export function Brand({
   className?: string;
   height?: number;
 }) {
-  const to = locale === "ar" ? "/ar" : "/";
+  const to = locale === "ar" ? "/ar" : "/en";
   return (
     <Link to={to} aria-label="Future Earth Energy Systems — Home" className={`inline-flex items-center ${className}`}>
       <img

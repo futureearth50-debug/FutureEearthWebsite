@@ -17,6 +17,7 @@ import { Route as ArRouteImport } from './routes/ar'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolarSolutionsIndexRouteImport } from './routes/solar-solutions.index'
+import { Route as EnIndexRouteImport } from './routes/en.index'
 import { Route as ArIndexRouteImport } from './routes/ar.index'
 import { Route as SolarSolutionsRooftopSolarRouteImport } from './routes/solar-solutions.rooftop-solar'
 import { Route as SolarSolutionsHybridSolutionsRouteImport } from './routes/solar-solutions.hybrid-solutions'
@@ -70,6 +71,11 @@ const SolarSolutionsIndexRoute = SolarSolutionsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SolarSolutionsRoute,
+} as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/en/',
+  path: '/en/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ArIndexRoute = ArIndexRouteImport.update({
   id: '/',
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/solar-solutions/hybrid-solutions': typeof SolarSolutionsHybridSolutionsRoute
   '/solar-solutions/rooftop-solar': typeof SolarSolutionsRooftopSolarRoute
   '/ar/': typeof ArIndexRoute
+  '/en/': typeof EnIndexRoute
   '/solar-solutions/': typeof SolarSolutionsIndexRoute
   '/ar/solar-solutions/ground-base-solar': typeof ArSolarSolutionsGroundBaseSolarRoute
   '/ar/solar-solutions/hybrid-solutions': typeof ArSolarSolutionsHybridSolutionsRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByTo {
   '/solar-solutions/hybrid-solutions': typeof SolarSolutionsHybridSolutionsRoute
   '/solar-solutions/rooftop-solar': typeof SolarSolutionsRooftopSolarRoute
   '/ar': typeof ArIndexRoute
+  '/en': typeof EnIndexRoute
   '/solar-solutions': typeof SolarSolutionsIndexRoute
   '/ar/solar-solutions/ground-base-solar': typeof ArSolarSolutionsGroundBaseSolarRoute
   '/ar/solar-solutions/hybrid-solutions': typeof ArSolarSolutionsHybridSolutionsRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/solar-solutions/hybrid-solutions': typeof SolarSolutionsHybridSolutionsRoute
   '/solar-solutions/rooftop-solar': typeof SolarSolutionsRooftopSolarRoute
   '/ar/': typeof ArIndexRoute
+  '/en/': typeof EnIndexRoute
   '/solar-solutions/': typeof SolarSolutionsIndexRoute
   '/ar/solar-solutions/ground-base-solar': typeof ArSolarSolutionsGroundBaseSolarRoute
   '/ar/solar-solutions/hybrid-solutions': typeof ArSolarSolutionsHybridSolutionsRoute
@@ -229,6 +238,7 @@ export interface FileRouteTypes {
     | '/solar-solutions/hybrid-solutions'
     | '/solar-solutions/rooftop-solar'
     | '/ar/'
+    | '/en/'
     | '/solar-solutions/'
     | '/ar/solar-solutions/ground-base-solar'
     | '/ar/solar-solutions/hybrid-solutions'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/solar-solutions/hybrid-solutions'
     | '/solar-solutions/rooftop-solar'
     | '/ar'
+    | '/en'
     | '/solar-solutions'
     | '/ar/solar-solutions/ground-base-solar'
     | '/ar/solar-solutions/hybrid-solutions'
@@ -272,6 +283,7 @@ export interface FileRouteTypes {
     | '/solar-solutions/hybrid-solutions'
     | '/solar-solutions/rooftop-solar'
     | '/ar/'
+    | '/en/'
     | '/solar-solutions/'
     | '/ar/solar-solutions/ground-base-solar'
     | '/ar/solar-solutions/hybrid-solutions'
@@ -287,6 +299,7 @@ export interface RootRouteChildren {
   ProductsRoute: typeof ProductsRoute
   ServicesRoute: typeof ServicesRoute
   SolarSolutionsRoute: typeof SolarSolutionsRouteWithChildren
+  EnIndexRoute: typeof EnIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -346,6 +359,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/solar-solutions/'
       preLoaderRoute: typeof SolarSolutionsIndexRouteImport
       parentRoute: typeof SolarSolutionsRoute
+    }
+    '/en/': {
+      id: '/en/'
+      path: '/en'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/ar/': {
       id: '/ar/'
@@ -504,6 +524,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsRoute: ProductsRoute,
   ServicesRoute: ServicesRoute,
   SolarSolutionsRoute: SolarSolutionsRouteWithChildren,
+  EnIndexRoute: EnIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

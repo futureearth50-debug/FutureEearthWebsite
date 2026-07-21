@@ -1,8 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, Globe, ArrowRight, ChevronDown } from "lucide-react";
 import { nav, ui, solar, type Locale } from "@/content/site";
 import { Brand } from "./Brand";
+
 
 export function Header({ locale }: { locale: Locale }) {
   const items = nav[locale];
@@ -85,24 +87,16 @@ export function Header({ locale }: { locale: Locale }) {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              to={t.switchTo as string}
-              className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full transition-colors"
-              style={{ color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)" }}
-            >
-              <Globe size={14} />
-              <span>{t.switch}</span>
-            </Link>
-            <Link
-              to={locale === "ar" ? "/ar/contact" : "/contact"}
-              className="fe-btn fe-btn-primary"
-              style={{ padding: "0.62rem 1.15rem", fontSize: "0.83rem" }}
-            >
-              {t.getConsultation} <ArrowRight size={15} className="fe-flip-x" />
-            </Link>
-          </div>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            to={t.switchTo as string}
+            aria-label={t.switch as string}
+            className="inline-flex items-center gap-1.5 text-sm rounded-full transition-colors p-2 sm:px-3 sm:py-1.5"
+            style={{ color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)" }}
+          >
+            <Globe size={14} />
+            <span className="hidden sm:inline">{t.switch}</span>
+          </Link>
           <button className="lg:hidden text-white p-2 -mx-2" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>

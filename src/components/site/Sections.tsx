@@ -104,7 +104,16 @@ export function CTARibbon({
     <section className="fe-section">
       <div className="fe-container">
         <Reveal>
-          <div className="relative overflow-hidden fe-blueprint-dark" style={{ background: "var(--fe-grad-dark)", borderRadius: "var(--fe-r-xl)", padding: "clamp(2.5rem,5vw,4.5rem)" }}>
+          <div
+            className="relative overflow-hidden fe-blueprint-dark"
+            style={{
+              background: "var(--fe-grad-dark)",
+              borderRadius: "var(--fe-r-xl)",
+              padding: "clamp(1.75rem,5vw,4.5rem)",
+              isolation: "isolate",
+              WebkitMaskImage: "-webkit-radial-gradient(white, black)",
+            }}
+          >
             <div className="fe-glow-sky" />
             <div className="fe-noise" />
             <div className="relative grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">

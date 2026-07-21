@@ -12,7 +12,7 @@ export type Locale = "en" | "ar";
 
 export const nav = {
   en: [
-    { to: "/", label: "Home" },
+    { to: "/en", label: "Home" },
     { to: "/about", label: "About Us" },
     { to: "/solar-solutions", label: "Solar Solutions" },
     { to: "/products", label: "Products" },
@@ -68,7 +68,7 @@ export const ui = {
     trustedBy: "موثوقون من",
     scroll: "مرّر",
     switch: "English",
-    switchTo: "/",
+    switchTo: "/en",
     clientsTitle: "العملاء والمشاريع المرجعية",
     partnersTitle: "الشركاء التقنيون والموردون",
     logosLead:
@@ -1373,7 +1373,7 @@ export const footer = {
       "Future Earth is a certified renewable energy contractor engineering high performance solar networks and advanced lithium energy storage systems compliant with regional utility regulatory codes for industrial commercial and residential developments across the Kingdom of Saudi Arabia",
     quickTitle: "Quick Access",
     quick: [
-      { l: "Home", to: "/" },
+      { l: "Home", to: "/en" },
       { l: "About Us", to: "/about" },
       { l: "Solar Solutions", to: "/solar-solutions" },
       { l: "Products", to: "/products" },

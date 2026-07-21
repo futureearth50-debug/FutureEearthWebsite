@@ -2,19 +2,23 @@ import { clientLogos, partnerLogos, type Logo } from "@/content/logos";
 import { ui, type Locale } from "@/content/site";
 
 function Row({ logos, rev = false }: { logos: Logo[]; rev?: boolean }) {
+  // Duplicated within a single track (not two sibling tracks): the loop shift is
+  // -50% of this one element's own (doubled) width, so it's exactly one logo-set
+  // wide and always seamless. Two independent sibling tracks broke under RTL flex
+  // (the duplicate landed on the same side content scrolls *toward*, not the side
+  // it scrolls *in from*), leaving a growing blank gap on the Arabic homepage.
+  const doubled = [...logos, ...logos];
   return (
     <div className="fe-marquee">
-      {[0, 1].map((k) => (
-        <div key={k} className={`fe-marquee-track ${rev ? "rev" : ""}`} aria-hidden={k === 1}>
-          {logos.map((l, i) => (
-            <div key={`${k}-${i}`} className="fe-logo-cell" title={l.name}>
-              {/* eager + async: marquee cells are transform-translated, where lazy-load
-                  fails to trigger and leaves intermittent blank cells */}
-              <img src={l.src} alt={l.name} loading="eager" decoding="async" />
-            </div>
-          ))}
-        </div>
-      ))}
+      <div className={`fe-marquee-track ${rev ? "rev" : ""}`}>
+        {doubled.map((l, i) => (
+          <div key={i} className="fe-logo-cell" title={l.name} aria-hidden={i >= logos.length}>
+            {/* eager + async: marquee cells are transform-translated, where lazy-load
+                fails to trigger and leaves intermittent blank cells */}
+            <img src={l.src} alt={i < logos.length ? l.name : ""} loading="eager" decoding="async" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -932,7 +932,13 @@ html[dir="rtl"] .fe-pcard:hover .fe-pcard-cta svg { transform: translateX(-3px);
   .fe-logo-cell img { max-height: 56px; max-width: 165px; }
 }
 
-.fe-marquee { display: flex; overflow: hidden; gap: 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.fe-marquee {
+  display: flex; overflow: hidden; gap: 0;
+  /* translate() always moves in the physical (LTR) direction; forcing ltr here keeps the
+     track flush against the correct edge so the loop stays gapless even on RTL pages. */
+  direction: ltr;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
 .fe-marquee-track { display: flex; gap: 0; animation: fe-marquee 46s linear infinite; will-change: transform; }
 .fe-marquee:hover .fe-marquee-track { animation-play-state: paused; }
 @keyframes fe-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
