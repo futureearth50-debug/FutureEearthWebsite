@@ -2,7 +2,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight, Sun, Diamond, Cpu, Layers3,
-  HardHat, Wrench, MessageSquare, PencilRuler, Gauge, Headset,
+  HardHat, LifeBuoy, Wallet,
 } from "lucide-react";
 import { solar, products, homeSections, type Locale } from "@/content/site";
 import { Reveal } from "./Reveal";
@@ -167,7 +167,7 @@ export function HomeFeaturedProducts({ locale }: { locale: Locale }) {
 }
 
 /* ============================ OUR SERVICES ============================ */
-const serviceIcons = [HardHat, Wrench, MessageSquare, PencilRuler, Gauge, Headset];
+const serviceIcons = [HardHat, LifeBuoy, Wallet];
 
 export function HomeServices({ locale }: { locale: Locale }) {
   const c = homeSections[locale].services;
@@ -175,37 +175,53 @@ export function HomeServices({ locale }: { locale: Locale }) {
   const servicesTo = isRtl ? "/ar/services" : "/services";
 
   return (
-    <section className="fe-section" style={{ background: "var(--fe-white)" }}>
-      <div className="fe-container">
-        <SectionHead eyebrow={c.eyebrow} title={c.title} lead={c.lead} />
+    <section className="relative overflow-hidden fe-blueprint-dark fe-section" style={{ background: "var(--fe-grad-dark)", color: "white" }}>
+      <div className="fe-glow-steel" />
+      <div className="fe-container relative">
+        {/* Header — title left, capability counter + CTA right */}
+        <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-16 items-end mb-12 lg:mb-16">
+          <div className="max-w-2xl">
+            <Reveal><div className="fe-eyebrow" style={{ color: "var(--fe-amber)" }}>{c.eyebrow}</div></Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="fe-display mt-5" style={{ fontSize: "clamp(1.9rem,3.6vw,3.1rem)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{c.title}</h2>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <p className="mt-5" style={{ color: "rgba(255,255,255,0.72)", fontSize: "1.05rem", lineHeight: 1.66, maxWidth: 560 }}>{c.lead}</p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.2}>
+            <div className="flex flex-col items-start lg:items-end gap-5">
+              <div className="fe-mono" style={{ fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fe-steel-2)" }}>
+                0{c.items.length} {isRtl ? "قدرات هندسية" : "Engineering Capabilities"}
+              </div>
+              <Link to={servicesTo} className="fe-btn fe-btn-primary">
+                {c.viewAll} <ArrowRight size={17} className="fe-flip-x" />
+              </Link>
+            </div>
+          </Reveal>
+        </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Premium capability grid — each card routes to the Services page */}
+        <div className="fe-svc-grid">
           {c.items.map((s, i) => {
             const Icon = serviceIcons[i];
             return (
-              <Reveal key={s.t} delay={(i % 3) * 0.08}>
-                <div className="fe-card group h-full">
-                  <span
-                    className="grid place-items-center rounded-xl transition-all duration-500 group-hover:scale-105"
-                    style={{ width: 52, height: 52, background: "var(--fe-cloud)", color: "var(--fe-amber-deep)" }}
-                  >
-                    <Icon size={23} />
+              <Reveal key={s.t} delay={i * 0.09}>
+                <Link to={servicesTo} className="fe-svc">
+                  <div className="fe-svc-head">
+                    <span className="fe-svc-ic"><Icon size={23} /></span>
+                    <span className="fe-svc-no">{`0${i + 1}`}</span>
+                  </div>
+                  <h3 className="fe-svc-title">{s.t}</h3>
+                  <p className="fe-svc-desc">{s.d}</p>
+                  <span className="fe-svc-cta">
+                    {c.explore} <ArrowRight size={15} className="fe-flip-x" />
                   </span>
-                  <h3 className="fe-display mt-6" style={{ fontSize: "1.2rem", fontWeight: 600, color: "var(--fe-navy)" }}>{s.t}</h3>
-                  <p className="mt-2.5" style={{ color: "var(--fe-slate)", lineHeight: 1.62, fontSize: "0.95rem" }}>{s.d}</p>
-                </div>
+                </Link>
               </Reveal>
             );
           })}
         </div>
-
-        <Reveal delay={0.1}>
-          <div className="mt-11 flex justify-center">
-            <Link to={servicesTo} className="fe-btn fe-btn-dark">
-              {c.viewAll} <ArrowRight size={17} className="fe-flip-x" />
-            </Link>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

@@ -449,6 +449,86 @@ html[dir="rtl"] .fe-navdrop:focus-within .fe-navdrop-panel { transform: translat
 }
 
 /* --------------------------------------------------------------------------
+   Home — Services capability grid (premium dark glass cards)
+   -------------------------------------------------------------------------- */
+
+.fe-svc-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .fe-svc-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .fe-svc-grid { grid-template-columns: repeat(3, 1fr); gap: 1.15rem; } }
+
+.fe-svc {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(1.5rem, 2.4vw, 2.1rem);
+  border-radius: var(--fe-r-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(143, 180, 214, 0.16);
+  transition: transform 0.55s var(--fe-ease), box-shadow 0.55s var(--fe-ease),
+    border-color 0.55s var(--fe-ease), background 0.55s var(--fe-ease);
+}
+/* animated top accent bar */
+.fe-svc::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--fe-grad-sun);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s var(--fe-ease);
+}
+html[dir="rtl"] .fe-svc::before { transform-origin: right; }
+.fe-svc:hover {
+  transform: translateY(-6px);
+  border-color: rgba(245, 166, 35, 0.5);
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: var(--fe-shadow-lg), 0 0 0 1px rgba(245, 166, 35, 0.12);
+}
+.fe-svc:hover::before { transform: scaleX(1); }
+
+.fe-svc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.fe-svc-ic {
+  display: grid; place-items: center; flex: 0 0 auto;
+  width: 52px; height: 52px; border-radius: 14px;
+  background: var(--fe-grad-steel); color: var(--fe-steel);
+  border: 1px solid rgba(143, 180, 214, 0.22);
+  transition: transform 0.55s var(--fe-ease), background 0.55s var(--fe-ease),
+    color 0.55s var(--fe-ease), border-color 0.55s var(--fe-ease);
+}
+.fe-svc:hover .fe-svc-ic {
+  background: var(--fe-grad-sun); color: #221200;
+  border-color: transparent;
+  transform: scale(1.06) rotate(-3deg);
+}
+.fe-svc-no {
+  font-family: var(--fe-font-display); font-weight: 600;
+  font-size: clamp(2.2rem, 4vw, 3rem); line-height: 0.85; letter-spacing: -0.04em;
+  color: rgba(143, 180, 214, 0.18);
+  transition: color 0.55s var(--fe-ease);
+}
+.fe-svc:hover .fe-svc-no { color: rgba(245, 166, 35, 0.4); }
+.fe-svc-title {
+  margin-top: 1.6rem;
+  font-family: var(--fe-font-display); font-weight: 600; font-size: 1.2rem; color: #fff;
+}
+.fe-svc-desc {
+  margin-top: 0.6rem;
+  color: rgba(255, 255, 255, 0.62); font-size: 0.93rem; line-height: 1.6;
+}
+.fe-svc-cta {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  margin-top: auto; padding-top: 1.5rem;
+  font-family: var(--fe-font-display); font-weight: 600; font-size: 0.88rem;
+  color: var(--fe-steel);
+  transition: color 0.5s var(--fe-ease);
+}
+.fe-svc:hover .fe-svc-cta { color: var(--fe-amber); }
+.fe-svc-cta svg { transition: transform 0.45s var(--fe-ease); }
+.fe-svc:hover .fe-svc-cta svg { transform: translateX(3px); }
+html[dir="rtl"] .fe-svc:hover .fe-svc-cta svg { transform: translateX(-3px); }
+
+/* --------------------------------------------------------------------------
    Solution page switcher
    -------------------------------------------------------------------------- */
 

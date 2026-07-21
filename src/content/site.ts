@@ -289,30 +289,19 @@ export const homeSections = {
       title: "Full-Lifecycle Engineering Services",
       lead: "From the first structural survey to decades of monitored operation, Future Earth governs every stage of your energy asset.",
       viewAll: "Explore All Services",
+      explore: "Learn More",
       items: [
         {
-          t: "Installation",
-          d: "Turnkey EPC installation from structural survey to grid interconnection, delivered by certified crews.",
+          t: "Turnkey Installation",
+          d: "Expert design, structural survey, MOMRA and SEC approvals, and tier-1 procurement through to full installation.",
         },
         {
-          t: "Maintenance",
-          d: "Scheduled preventative maintenance, professional cleaning cycles and electrical testing to sustain peak yield.",
+          t: "Lifetime Support",
+          d: "24/7 smart monitoring, rapid field response, scheduled preventative maintenance and 25-year warranty security.",
         },
         {
-          t: "Consultation",
-          d: "Technical energy consultation and facility assessment to size the right system for your load profile.",
-        },
-        {
-          t: "System Design",
-          d: "Precise system modeling with load and wind analysis, and engineered documentation for safe long-term deployment.",
-        },
-        {
-          t: "Monitoring",
-          d: "24/7 smart monitoring of every panel and inverter in real time to prevent sudden performance drops.",
-        },
-        {
-          t: "Technical Support",
-          d: "Rapid certified field response and warranty management keeping your assets compliant for up to 25 years.",
+          t: "Purchasing Models",
+          d: "Direct system purchase or a zero-upfront Solar Power Purchase Agreement (PPA), tailored to your operation.",
         },
       ],
     },
@@ -344,30 +333,19 @@ export const homeSections = {
       title: "خدمات هندسية لدورة الحياة الكاملة",
       lead: "من أول معاينة إنشائية وحتى عقود من التشغيل المراقَب، تدير فيوتشر إيرث كل مرحلة من مراحل أصل الطاقة الخاص بك.",
       viewAll: "استكشف جميع الخدمات",
+      explore: "اعرف المزيد",
       items: [
         {
-          t: "التركيب",
-          d: "تركيب متكامل بنظام EPC من المعاينة الإنشائية حتى ربط الشبكة، ينفذه فريق معتمد.",
+          t: "التركيب المتكامل",
+          d: "تصميم هندسي، ومعاينة إنشائية، وموافقات البلديات وشركة الكهرباء، وتوريد من الفئة الأولى وصولاً إلى التركيب الكامل.",
         },
         {
-          t: "الصيانة",
-          d: "صيانة وقائية مجدولة ودورات تنظيف احترافية واختبارات كهربائية للحفاظ على أعلى إنتاجية.",
+          t: "الدعم مدى الحياة",
+          d: "مراقبة ذكية على مدار الساعة، واستجابة ميدانية سريعة، وصيانة وقائية مجدولة، وحماية ضمان تمتد 25 عاماً.",
         },
         {
-          t: "الاستشارات",
-          d: "استشارة فنية للطاقة ومعاينة للمنشأة لتحديد النظام الأمثل وفق نمط استهلاكك.",
-        },
-        {
-          t: "تصميم الأنظمة",
-          d: "نمذجة دقيقة للأنظمة وتحليل الأحمال والرياح ووثائق هندسية معتمدة للنشر الآمن طويل الأمد.",
-        },
-        {
-          t: "المراقبة",
-          d: "مراقبة ذكية على مدار الساعة لكل لوح وعاكس في الوقت الفعلي لمنع أي انخفاض مفاجئ في الأداء.",
-        },
-        {
-          t: "الدعم الفني",
-          d: "استجابة ميدانية سريعة معتمدة وإدارة الضمانات للحفاظ على أصولك ممتثلة حتى 25 عاماً.",
+          t: "نماذج الشراء",
+          d: "شراء مباشر للنظام أو اتفاقية شراء طاقة شمسية (PPA) بدون تكاليف تأسيسية، مصممة وفق عملياتك.",
         },
       ],
     },
