@@ -10,6 +10,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ChatWidgetMount } from "../components/site/ChatWidgetMount";
 
 function NotFoundComponent() {
   return (
@@ -78,11 +79,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: browser extensions (ColorZilla, Grammarly, etc.)
+    // inject attributes onto <html>/<body> before React hydrates, which the
+    // server render can't know about. This suppresses only these two elements'
+    // own attributes — one level deep — so genuine mismatches inside the app
+    // still surface normally.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Scripts />
       </body>
@@ -95,6 +101,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <ChatWidgetMount />
     </QueryClientProvider>
   );
 }

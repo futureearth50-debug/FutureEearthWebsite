@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, Globe, ArrowRight, ChevronDown } from "lucide-react";
-import { nav, ui, solar, type Locale } from "@/content/site";
+import { nav, ui, solar, type Locale, type NavItem } from "@/content/site";
 import { Brand } from "./Brand";
 
+/** Route alone is not unique — anchor links reuse a page's route. */
+const navKey = (n: NavItem) => (n.hash ? `${n.to}#${n.hash}` : n.to);
 
 export function Header({ locale }: { locale: Locale }) {
   const items = nav[locale];
@@ -45,15 +47,22 @@ export function Header({ locale }: { locale: Locale }) {
       <div className="fe-container flex items-center justify-between" style={{ height: 78 }}>
         <Brand locale={locale} tone="light" />
 
-        <nav className="hidden lg:flex items-center gap-9">
+        {/* 7 items — with labels this long the row only fits from xl up; below
+            that the drawer carries the full nav rather than clipping it. */}
+        <nav className="hidden xl:flex items-center gap-6">
           {items.map((n) => {
             const hasSub = n.to === solarBase;
-            const active = hasSub ? pathname.startsWith(solarBase) : pathname === n.to;
+            // Anchor links (e.g. Our Projects → #track-record) share a route with
+            // Home, so they must never claim the active state from it.
+            const active = hasSub
+              ? pathname.startsWith(solarBase)
+              : !n.hash && pathname === n.to;
 
             const link = (
               <Link
-                to={n.to}
-                className="relative py-1 text-sm transition-colors group inline-flex items-center gap-1.5"
+                to={n.to as string}
+                hash={n.hash}
+                className="relative py-1 text-sm transition-colors group inline-flex items-center gap-1.5 whitespace-nowrap"
                 style={{ color: active ? "var(--fe-amber)" : "rgba(255,255,255,0.82)", fontFamily: "var(--fe-font-display)", fontWeight: 500 }}
               >
                 {n.label}
@@ -65,10 +74,10 @@ export function Header({ locale }: { locale: Locale }) {
               </Link>
             );
 
-            if (!hasSub) return <div key={n.to}>{link}</div>;
+            if (!hasSub) return <div key={navKey(n)}>{link}</div>;
 
             return (
-              <div key={n.to} className="fe-navdrop">
+              <div key={navKey(n)} className="fe-navdrop">
                 {link}
                 <div className="fe-navdrop-panel">
                   {solarSubs.map((s) => (
@@ -97,21 +106,21 @@ export function Header({ locale }: { locale: Locale }) {
             <Globe size={14} />
             <span className="hidden sm:inline">{t.switch}</span>
           </Link>
-          <button className="lg:hidden text-white p-2 -mx-2" onClick={() => setOpen(!open)} aria-label="Menu">
+          <button className="xl:hidden text-white p-2 -mx-2" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="lg:hidden fe-blueprint-dark" style={{ background: "var(--fe-navy)", borderTop: "1px solid rgba(143,180,214,0.12)", maxHeight: "calc(100vh - 78px)", overflowY: "auto" }}>
+        <div className="xl:hidden fe-blueprint-dark" style={{ background: "var(--fe-navy)", borderTop: "1px solid rgba(143,180,214,0.12)", maxHeight: "calc(100vh - 78px)", overflowY: "auto" }}>
           <div className="fe-container py-7 flex flex-col gap-1">
             {items.map((n, i) => {
               const hasSub = n.to === solarBase;
               return (
-                <div key={n.to} className="border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                <div key={navKey(n)} className="border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
                   <div className="flex items-center justify-between">
-                    <Link to={n.to} className="flex-1 py-3 text-white text-lg fe-display" style={{ fontWeight: 500 }}>
+                    <Link to={n.to as string} hash={n.hash} className="flex-1 py-3 text-white text-lg fe-display" style={{ fontWeight: 500 }}>
                       {n.label}
                     </Link>
                     {hasSub ? (

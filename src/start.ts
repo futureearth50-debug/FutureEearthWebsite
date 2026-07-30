@@ -9,6 +9,19 @@ const csrfMiddleware = createCsrfMiddleware({
   filter: (ctx) => ctx.handlerType === "serverFn",
 });
 
+// Per-IP rate limiting for the chatbot RPC endpoints (chat, analysis, analytics),
+// protecting the AI/quota + email/WhatsApp from scripted abuse. The limiter lives
+// under `@/server/**`; it's dynamically imported so it never enters the client
+// bundle (and stays clear of the import-protection guard).
+const rateLimitMiddleware = createMiddleware().server(async (ctx) => {
+  if (ctx.handlerType === "serverFn") {
+    const { enforceRateLimit } = await import("@/server/rateLimit");
+    const limited = enforceRateLimit(ctx.request, ctx.pathname);
+    if (limited) return limited; // 429 — short-circuit before the handler runs
+  }
+  return ctx.next();
+});
+
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
     return await next();
@@ -25,5 +38,5 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 });
 
 export const startInstance = createStart(() => ({
-  requestMiddleware: [csrfMiddleware, errorMiddleware],
+  requestMiddleware: [csrfMiddleware, rateLimitMiddleware, errorMiddleware],
 }));

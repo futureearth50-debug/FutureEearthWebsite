@@ -10,21 +10,26 @@ export type Locale = "en" | "ar";
 // Navigation + brand + contact identity
 // -----------------------------------------------------------------------------
 
-export const nav = {
+/** A header/footer link. `hash` targets a section on the destination page. */
+export type NavItem = { to: string; label: string; hash?: string };
+
+export const nav: { en: NavItem[]; ar: NavItem[] } = {
   en: [
     { to: "/en", label: "Home" },
     { to: "/about", label: "About Us" },
     { to: "/solar-solutions", label: "Solar Solutions" },
-    { to: "/products", label: "Products" },
+    { to: "/products", label: "Energy Storage Solutions" },
     { to: "/services", label: "Services" },
+    { to: "/en", hash: "track-record", label: "Our Projects" },
     { to: "/contact", label: "Contact Us" },
   ],
   ar: [
     { to: "/ar", label: "الرئيسية" },
     { to: "/ar/about", label: "من نحن" },
     { to: "/ar/solar-solutions", label: "حلول الطاقة الشمسية" },
-    { to: "/ar/products", label: "المنتجات" },
+    { to: "/ar/products", label: "حلول تخزين الطاقة" },
     { to: "/ar/services", label: "الخدمات" },
+    { to: "/ar", hash: "track-record", label: "مشاريعنا" },
     { to: "/ar/contact", label: "تواصل معنا" },
   ],
 };
@@ -41,6 +46,8 @@ export const contactInfo = {
   },
   phone: "+966118108828",
   phoneDisplay: "+966 11 810 8828",
+  phoneAlt: "+966569757575",
+  phoneAltDisplay: "+966 569 757575",
   email: "contact@fe-ksa.com",
   whatsapp: "966118108828",
   hours: {
@@ -54,25 +61,25 @@ export const contactInfo = {
 export const ui = {
   en: {
     getConsultation: "Request Technical Consultation",
-    trustedBy: "Trusted by",
+    clientsHeadline: "We are proud of the trust our clients and partners place in us worldwide",
     scroll: "Scroll",
     switch: "العربية",
     switchTo: "/ar",
-    clientsTitle: "Clients & References",
+    clientsTitle: "Our Clients",
     partnersTitle: "Technology Partners & Suppliers",
     logosLead:
-      "A verified network of enterprise clients, government entities and Tier-1 global manufacturers.",
+      "We work with leading government entities, industrial institutions and global manufacturers to deliver reliable and sustainable energy solutions.",
   },
   ar: {
     getConsultation: "طلب استشارة فنية",
-    trustedBy: "موثوقون من",
+    clientsHeadline: "نفخر بثقة عملائنا وشركائنا حول العالم",
     scroll: "مرّر",
     switch: "English",
     switchTo: "/en",
-    clientsTitle: "العملاء والمشاريع المرجعية",
+    clientsTitle: "عملاؤنا",
     partnersTitle: "الشركاء التقنيون والموردون",
     logosLead:
-      "شبكة موثوقة من العملاء المؤسسيين والجهات الحكومية والمصنّعين العالميين من الفئة الأولى.",
+      "نعمل مع كبرى الجهات الحكومية، والمؤسسات الصناعية، والمصنعين العالميين لتقديم حلول طاقة موثوقة ومستدامة.",
   },
 };
 
@@ -82,182 +89,166 @@ export const ui = {
 
 export const home = {
   en: {
-    eyebrow: "Certified EPC Contractor · Kingdom of Saudi Arabia",
-    heroTitle:
-      "Turnkey Solar Infrastructure and Advanced Energy Storage Systems Across Saudi Arabia",
+    heroTitle: "More efficient energy... lower costs, and greater continuity for your business.",
     heroSub:
-      "Future Earth is a certified contractor engineering utility scale solar networks and industrial lithium battery storage compliant with Ministry of Energy and SEC regulations. Backed by over 100 Megawatts of verified regional execution we manage the complete project lifecycle from technical energy analysis to grid interconnection for major factories commercial complexes and developments.",
+      "Future Earth is a certified contractor delivering integrated solar energy and energy storage solutions, from studies and design through to execution, operation and maintenance, with full commitment to the highest standards of quality and safety.",
     ctaPrimary: "Request Technical Consultation",
-    ctaSecondary: "View Our Mega Projects",
+    ctaSecondary: "Our Projects",
     heroStats: [
       { value: 100, suffix: "+", unit: "MW", label: "Verified Regional Execution" },
       { value: 2, suffix: "", unit: "MW", label: "Ministry of Energy Qualification" },
       { value: 280, suffix: "+", unit: "", label: "Delivered Energy Projects" },
     ],
 
-    sectorsEyebrow: "Engineering Sectors",
-    sectorsTitle: "Five engineering sectors. One certified contractor.",
+    sectorsEyebrow: "Energy Solutions",
+    sectorsTitle: "Integrated energy solutions... from a single engineering partner.",
+    sectorsLead:
+      "We turn your energy requirements into practical, dependable solutions through integrated engineering services covering every stage of the project, from concept through to operation.",
     sectors: [
-      "Commercial and Industrial Rooftop Solar",
-      "Ground Mounted Solar Fields",
-      "Hybrid Solutions and Microgrids",
-      "Lithium Battery Energy Storage",
-      "Energy Infrastructure Financing Models",
+      "Rooftop Solar Energy Systems",
+      "Ground Mounted Solar Power Plants",
+      "Hybrid Systems and Smart Grid Solutions",
+      "Battery Energy Storage Systems (BESS)",
+      "Energy Project Financing Solutions",
     ],
 
     trackEyebrow: "Verified Track Record",
-    trackTitle: "Utility Scale Solar Infrastructure Deployed Across the GCC",
-    trackLeadValue: 100,
-    trackLeadLabel: "Total Megawatts Deployed",
-    trackLeadBody:
-      "Over 100 Megawatts of verified solar networks executing seamless grid connection globally and regionally.",
+    trackTitle: "Engineering projects that embody our expertise in energy solutions",
+    trackLead:
+      "We take pride in delivering solar energy projects and integrated energy systems for our clients across the Kingdom of Saudi Arabia and the GCC, built to the highest engineering standards and to a quality that guarantees long-term performance and reliability.",
     projects: [
       {
         capacity: "1.7 MW",
-        kwp: "1702 kWp",
         title: "The Village Mall — Jeddah",
-        kicker: "Mega Project",
         body: "Engineering supply and full commissioning of a 1702 kWp rooftop solar infrastructure.",
       },
       {
         capacity: "1.3 MW",
-        kwp: "1358 kWp",
         title: "Al Munajem Foods — Riyadh",
-        kicker: "Industrial Project",
         body: "Complete execution of a 1358 kWp rooftop solar network for industrial cold storage.",
       },
       {
         capacity: "262 kWp",
-        kwp: "262 kWp",
         title: "DEWA & Alfanar — Dubai",
-        kicker: "Regional Substation Interconnection",
         body: "Delivering a 262 kWp engineered solar integration for the Dubai Shamal Substation.",
       },
     ],
     trackCta: "Request Your Facility Survey",
 
-    valueEyebrow: "Strategic Value & Certifications",
-    valueTitle: "Engineered for High Yield Operational and Financial Return",
+    valueEyebrow: "Why Future Earth?",
+    valueTitle:
+      "We design and deliver integrated energy solutions that raise operational efficiency and achieve a sustainable return on investment.",
     features: [
       {
-        t: "Maximized Financial ROI",
-        d: "Engineered setups delivering up to 6 times the initial capital investment with a 30 year operational lifespan.",
+        t: "Engineering solutions that deliver sustainable investment value",
+        d: "Engineering design that contributes to a return on investment of up to 6 times the capital over the operational lifetime of the system, depending on the nature of the project and its energy consumption.",
         metric: "6×",
         metricLabel: "Return on capital · 30-year lifespan",
       },
       {
-        t: "Ministry of Energy Certified",
-        d: "Fully qualified by the Saudi Ministry of Energy contractor committee for solar photovoltaic networks up to 2 Megawatts.",
+        t: "Ministry of Energy Accreditation",
+        d: "Qualified to design, execute and grid-connect solar energy systems up to a capacity of 2 Megawatts, in accordance with the requirements of the Ministry of Energy and the Saudi Electricity Company.",
         metric: "2 MW",
         metricLabel: "Certified PV network qualification",
       },
       {
-        t: "Tier 1 Regulatory Compliance",
-        d: "Backed by triple ISO certifications ISO 9001 Quality ISO 45001 Safety ISO 14001 Environment and certified SEC installers.",
+        t: "World-class standards of quality and excellence",
+        d: "We operate to ISO 9001 for quality, ISO 14001 for environmental management and ISO 45001 for occupational health and safety, ensuring projects are delivered efficiently and reliably.",
         metric: "ISO ×3",
         metricLabel: "9001 · 45001 · 14001 + SEC",
       },
       {
-        t: "Full Lifecycle Ownership",
-        d: "Total control over engineering workflow and direct procurement management from global factories to local site deployment.",
+        t: "Integrated engineering solutions",
+        d: "We handle every stage of the project, beginning with studies and design, through procurement and execution, and on to operation and maintenance, to guarantee delivery quality and fully integrated solutions.",
         metric: "EPC",
         metricLabel: "Engineering to site deployment",
       },
     ],
 
-    ribbonTitle: "Transition Your Facility to Renewable Infrastructure Today",
+    ribbonTitle: "Turn your energy consumption into a smart investment today",
     ribbonSub:
-      "Initiate a comprehensive energy consumption analysis and engineering survey with our certified team to optimize operational expenditures",
+      "Start with a comprehensive engineering assessment of your facility to identify the best energy solutions to lower operating costs and raise performance efficiency.",
     ribbonCta: "Request Customized Energy Analysis",
   },
   ar: {
-    eyebrow: "مقاول EPC معتمد · المملكة العربية السعودية",
-    heroTitle:
-      "بنية تحتية متكاملة للطاقة الشمسية وأنظمة متطورة لتخزين الطاقة في جميع أنحاء المملكة العربية السعودية",
+    heroTitle: "طاقة أكثر كفاءة... وتكاليف أقل، واستمرارية أعلى لأعمالك.",
     heroSub:
-      "فيوتشر إيرث هي مقاول معتمد يتولى هندسة شبكات الطاقة الشمسية للمشاريع الكبرى وأنظمة تخزين الطاقة الصناعية ببطاريات الليثيوم، بالتوافق التام مع لوائح وزارة الطاقة والشركة السعودية للكهرباء. بالاستناد إلى سجل إنجازات إقليمي موثق يتجاوز 100 ميجاواط، ندير الدورة الكاملة لحياة المشاريع بدءاً من التحليل الفني للطاقة ووصولاً إلى ربط الشبكة للمصانع الكبرى، المجمعات التجارية، والمشاريع التطويرية.",
+      "فيوتشر إيرث هي مقاول معتمد يقدم حلولاً متكاملة للطاقة الشمسية وأنظمة تخزين الطاقة، بدءًا من الدراسات والتصميم وحتى التنفيذ والتشغيل والصيانة، مع الالتزام الكامل بأعلى معايير الجودة والسلامة.",
     ctaPrimary: "طلب استشارة فنية",
-    ctaSecondary: "استعراض مشاريعنا الكبرى",
+    ctaSecondary: "مشاريعنا",
     heroStats: [
       { value: 100, suffix: "+", unit: "ميجاواط", label: "سجل إنجازات إقليمي موثق" },
       { value: 2, suffix: "", unit: "ميجاواط", label: "تأهيل وزارة الطاقة" },
       { value: 280, suffix: "+", unit: "", label: "مشروع طاقة منجز" },
     ],
 
-    sectorsEyebrow: "القطاعات الهندسية",
-    sectorsTitle: "خمسة قطاعات هندسية. مقاول معتمد واحد.",
+    sectorsEyebrow: "حلول الطاقة",
+    sectorsTitle: "حلول الطاقة المتكاملة... من شريك هندسي واحد.",
+    sectorsLead:
+      "نحوّل احتياجاتك في مجال الطاقة إلى حلول عملية وموثوقة، من خلال خدمات هندسية متكاملة تغطي جميع مراحل المشروع، من الفكرة وحتى التشغيل.",
     sectors: [
-      "الطاقة الشمسية لأسطح المباني التجارية والصناعية",
-      "المحطات الأرضية للطاقة الشمسية",
-      "الأنظمة الهجينة والشبكات الذكية",
-      "تخزين الطاقة ببطاريات الليثيوم",
-      "نماذج تمويل البنية التحتية للطاقة",
+      "أنظمة الطاقة الشمسية للأسطح",
+      "محطات الطاقة الشمسية الأرضية",
+      "الأنظمة الهجينة وحلول الشبكات الذكية",
+      "أنظمة تخزين الطاقة (BESS)",
+      "حلول تمويل مشاريع الطاقة",
     ],
 
     trackEyebrow: "سجل إنجازات موثق",
-    trackTitle:
-      "بنية تحتية للطاقة الشمسية بمقاييس المرافق الخدمية منشورة في دول مجلس التعاون الخليجي",
-    trackLeadValue: 100,
-    trackLeadLabel: "إجمالي الميجاواط المنفذة",
-    trackLeadBody:
-      "أكثر من 100 ميجاواط من شبكات الطاقة الشمسية الموثقة التي تنفذ ربطاً سلساً بالشبكة عالمياً وإقليمياً.",
+    trackTitle: "مشاريع هندسية تُجسّد خبرتنا في حلول الطاقة",
+    trackLead:
+      "نفخر بتنفيذ مشاريع طاقة شمسية وأنظمة طاقة متكاملة لعملائنا في المملكة العربية السعودية ودول مجلس التعاون الخليجي، وفق أعلى المعايير الهندسية وبجودة تضمن الأداء والاعتمادية على المدى الطويل.",
     projects: [
       {
         capacity: "1.7 ميجاواط",
-        kwp: "1702 كيلوواط ذروة",
         title: "ذا فيلج مول — جدة",
-        kicker: "مشروع عملاق",
         body: "التوريد الهندسي والتشغيل الكامل لبنية تحتية للطاقة الشمسية فوق الأسطح بقدرة 1702 كيلوواط ذروة.",
       },
       {
         capacity: "1.3 ميجاواط",
-        kwp: "1358 كيلوواط ذروة",
         title: "المنجم للأغذية — الرياض",
-        kicker: "مشروع صناعي",
         body: "التنفيذ الكامل لشبكة طاقة شمسية فوق الأسطح بقدرة 1358 كيلوواط ذروة مخصصة للتبريد الصناعي.",
       },
       {
         capacity: "262 كيلوواط",
-        kwp: "262 كيلوواط ذروة",
         title: "ديوا والفنار — دبي",
-        kicker: "ربط المحطات الفرعية الإقليمية",
         body: "تقديم تكامل هندسي للطاقة الشمسية بقدرة 262 كيلوواط ذروة لمحطة شمال دبي الفرعية.",
       },
     ],
     trackCta: "طلب معاينة فنية للمنشأة",
 
-    valueEyebrow: "القيمة الاستراتيجية والاعتمادات",
-    valueTitle: "هندسة مصممة لتحقيق أعلى العوائد التشغيلية والمالية",
+    valueEyebrow: "لماذا فيوتشر إيرث ؟",
+    valueTitle: "نصمم وننفذ حلول طاقة متكاملة لرفع كفاءة التشغيل وتحقيق عائد استثماري مستدام.",
     features: [
       {
-        t: "تعظيم العائد الاستثماري المالي",
-        d: "أنظمة هندسية توفر عوائد تصل إلى 6 أضعاف رأس المال الأولي مع عمر تشغيلي يمتد لـ 30 عاماً.",
+        t: "حلول هندسية تحقق قيمة استثمارية مستدامة.",
+        d: "تصميم هندسي يساهم في تحقيق عائد على الاستثمار قد يصل إلى 6 أضعاف رأس المال خلال العمر التشغيلي للنظام، وفقًا لطبيعة المشروع واستهلاك الطاقة.",
         metric: "6×",
         metricLabel: "عائد على رأس المال · عمر 30 عاماً",
       },
       {
         t: "اعتماد وزارة الطاقة",
-        d: "مؤهلون بالكامل من قِبل لجنة تأهيل مطوري ومقاولي أنظمة الطاقة الشمسية الكهروضوئية بوزارة الطاقة السعودية للشبكات حتى 2 ميجاواط.",
+        d: "مؤهلون لتصميم وتنفيذ وربط أنظمة الطاقة الشمسية بالشبكة حتى قدرة 2 ميجاواط، وفق متطلبات وزارة الطاقة والشركة السعودية للكهرباء.",
         metric: "2 ميجاواط",
         metricLabel: "تأهيل معتمد لشبكات الطاقة الكهروضوئية",
       },
       {
-        t: "الامتثال التنظيمي من الفئة الأولى",
-        d: "مدعومون بثلاث شهادات آيزو عالمية (ISO 9001 للجودة، ISO 45001 للسلامة، ISO 14001 للبيئة) ومثبتون معتمدون من الشركة السعودية للكهرباء.",
+        t: "معايير عالمية للجودة والتميز",
+        d: "نعمل وفق معايير ISO 9001 للجودة، وISO 14001 للإدارة البيئية، وISO 45001 للصحة والسلامة المهنية، لضمان تنفيذ المشاريع بكفاءة وموثوقية.",
         metric: "ISO ×3",
         metricLabel: "9001 · 45001 · 14001 + الكهرباء",
       },
       {
-        t: "ملكية كاملة لدورة حياة المشروع",
-        d: "تحكم شامل في تدفق العمل الهندسي وإدارة المشتريات المباشرة من المصانع العالمية إلى التنفيذ على أرض الموقع.",
+        t: "حلول هندسية متكاملة",
+        d: "نتولى جميع مراحل المشروع، بدءًا من الدراسات والتصميم، مرورًا بالتوريد والتنفيذ، وحتى التشغيل والصيانة، لضمان جودة التنفيذ وتكامل الحلول.",
         metric: "EPC",
         metricLabel: "من الهندسة إلى التنفيذ الموقعي",
       },
     ],
 
-    ribbonTitle: "انقل منشأتك إلى البنية التحتية المتجددة اليوم",
+    ribbonTitle: "حوّل استهلاك الطاقة إلى استثمار ذكي اليوم",
     ribbonSub:
-      "ابدأ تحليلاً شاملاً لاستهلاك الطاقة ومعاينة هندسية مع فريقنا المعتمد لتحسين النفقات التشغيلية",
+      "ابدأ بتقييم هندسي شامل لمنشأتك لتحديد أفضل حلول الطاقة التي تخفض التكاليف التشغيلية وترفع كفاءة الأداء.",
     ribbonCta: "طلب تحليل مخصص",
   },
 };
@@ -286,14 +277,14 @@ export const homeSections = {
     },
     services: {
       eyebrow: "Our Services",
-      title: "Full-Lifecycle Engineering Services",
-      lead: "From the first structural survey to decades of monitored operation, Future Earth governs every stage of your energy asset.",
+      title: "Integrated engineering services... from concept to operation",
+      lead: "From the very first idea to sustainable operation, we provide integrated engineering services that ensure professional delivery, operational efficiency and long-term investment value.",
       viewAll: "Explore All Services",
       explore: "Learn More",
       items: [
         {
-          t: "Turnkey Installation",
-          d: "Expert design, structural survey, MOMRA and SEC approvals, and tier-1 procurement through to full installation.",
+          t: "Design and Execution (EPC)",
+          d: "Engineering design, procurement, execution, testing and commissioning to the highest standards of quality and safety.",
         },
         {
           t: "Lifetime Support",
@@ -330,14 +321,14 @@ export const homeSections = {
     },
     services: {
       eyebrow: "خدماتنا",
-      title: "خدمات هندسية لدورة الحياة الكاملة",
-      lead: "من أول معاينة إنشائية وحتى عقود من التشغيل المراقَب، تدير فيوتشر إيرث كل مرحلة من مراحل أصل الطاقة الخاص بك.",
+      title: "خدمات هندسية متكاملة... من الفكرة إلى التشغيل",
+      lead: "من الفكرة الأولى إلى التشغيل المستدام، نوفر خدمات هندسية متكاملة تضمن تنفيذًا احترافيًا، وكفاءة تشغيلية، وقيمة استثمارية طويلة الأمد.",
       viewAll: "استكشف جميع الخدمات",
       explore: "اعرف المزيد",
       items: [
         {
-          t: "التركيب المتكامل",
-          d: "تصميم هندسي، ومعاينة إنشائية، وموافقات البلديات وشركة الكهرباء، وتوريد من الفئة الأولى وصولاً إلى التركيب الكامل.",
+          t: "التصميم والتنفيذ (EPC)",
+          d: "تصميم هندسي، توريد، تنفيذ، اختبارات وتشغيل وفق أعلى معايير الجودة والسلامة.",
         },
         {
           t: "الدعم مدى الحياة",
@@ -1428,6 +1419,9 @@ export const leadAssistant = {
     notifiedNote: "Your details were shared with our sales team.",
     talkNow: "Talk to us now",
     newChat: "Start a new conversation",
+    intentLabel: "Buying Intent",
+    detailsLabel: "Captured Details",
+    breakdownLabel: "Score Breakdown",
   },
   ar: {
     heroLead:
@@ -1457,6 +1451,63 @@ export const leadAssistant = {
     notifiedNote: "تمت مشاركة بياناتك مع فريق المبيعات.",
     talkNow: "تحدث معنا الآن",
     newChat: "بدء محادثة جديدة",
+    intentLabel: "نية الشراء",
+    detailsLabel: "التفاصيل المجمّعة",
+    breakdownLabel: "تفصيل الدرجة",
+  },
+};
+
+// -----------------------------------------------------------------------------
+// FLOATING CHAT WIDGET
+// Widget-specific chrome + the opening message. The Arabic `welcome` and
+// `quickReplies` are transcribed verbatim from the knowledge base
+// (knowledge-base/faq.xlsx → bot sheet); the English is the parallel authored
+// copy. Shared chat labels (send, restart, status, tiers, result view, …) live
+// in `leadAssistant` above and are reused by both the widget and Contact panel.
+// -----------------------------------------------------------------------------
+
+export const chatWidget = {
+  en: {
+    launcherLabel: "Chat with our energy consultant",
+    openAria: "Open the AI energy assistant",
+    closeAria: "Close chat",
+    minimizeAria: "Minimize chat",
+    title: "Energy Consultant",
+    subtitle: "AI-powered · replies instantly",
+    welcome:
+      "Welcome to Future Earth Energy Systems 👋\n\nI'm your AI energy consultant — ask me about solar, storage, savings or pricing, and I'll help scope your project.\n\nHow can I help you today?",
+    quickReplies: [
+      "I want a quote",
+      "Know the prices",
+      "Cut my electricity bill",
+      "I have a new project",
+      "I have a question",
+    ],
+    handoffWhatsApp: "Chat on WhatsApp",
+    handoffCall: "Call us",
+    poweredBy: "AI assistant",
+    justNow: "Just now",
+  },
+  ar: {
+    launcherLabel: "تحدث مع مستشار الطاقة",
+    openAria: "افتح مساعد الطاقة الذكي",
+    closeAria: "إغلاق المحادثة",
+    minimizeAria: "تصغير المحادثة",
+    title: "مستشار الطاقة",
+    subtitle: "مدعوم بالذكاء الاصطناعي · يرد فوراً",
+    welcome:
+      "أهلاً بك في شركة فيوتشر إيرث لأنظمة الطاقة\n\nيسعدني مساعدتك في حلول الطاقة الشمسية وأنظمة تخزين الطاقة.\n\nكيف يمكنني مساعدتك اليوم؟",
+    quickReplies: [
+      "أريد عرض سعر",
+      "أريد معرفة الأسعار",
+      "أريد تقليل فاتورة الكهرباء",
+      "لدي مشروع جديد",
+      "لدي استفسار",
+    ],
+    handoffWhatsApp: "المحادثة عبر واتساب",
+    handoffCall: "اتصل بنا",
+    poweredBy: "مساعد ذكي",
+    justNow: "الآن",
   },
 };
 
@@ -1467,7 +1518,7 @@ export const leadAssistant = {
 export const footer = {
   en: {
     description:
-      "Future Earth is a certified renewable energy contractor engineering high performance solar networks and advanced lithium energy storage systems compliant with regional utility regulatory codes for industrial commercial and residential developments across the Kingdom of Saudi Arabia",
+      "Future Earth Energy Systems is an engineering partner accredited by the Ministry of Energy, specialised in renewable energy solutions and energy storage systems. We provide design, engineering, procurement, execution, operation and maintenance services for energy projects across the commercial, industrial, agricultural and residential sectors, to the highest standards of quality and safety in the Kingdom of Saudi Arabia.",
     quickTitle: "Quick Access",
     quick: [
       { l: "Home", to: "/en" },
@@ -1476,23 +1527,12 @@ export const footer = {
       { l: "Products", to: "/products" },
       { l: "Services", to: "/services" },
     ],
-    identityTitle: "Corporate Identification",
-    identity: [
-      {
-        k: "Corporate Identification",
-        v: "Company Registration Certificate — Registered under Future Earth Energy Systems",
-      },
-      {
-        k: "Licensed EPC Qualification",
-        v: "Small Scale Photovoltaic Grid Interconnection up to 2 Megawatts",
-      },
-    ],
     contactTitle: "Contact",
     rights: "© " + new Date().getFullYear() + " Future Earth Energy Systems. All rights reserved.",
   },
   ar: {
     description:
-      "فيوتشر إيرث هي مقاول معتمد للطاقة المتجددة يتولى هندسة شبكات طاقة شمسية عالية الأداء وأنظمة متطورة لتخزين الطاقة ببطاريات الليثيوم، بالتوافق مع الرموز التنظيمية للمرافق الإقليمية للمشاريع الصناعية، التجارية، والسكنية في جميع أنحاء المملكة العربية السعودية",
+      "فيوتشر إيرث لأنظمة الطاقة شريك هندسي معتمد من وزارة الطاقة متخصص في حلول الطاقة المتجددة وأنظمة تخزين الطاقة، نقدم خدمات التصميم والهندسة والتوريد والتنفيذ والتشغيل والصيانة لمشاريع الطاقة في القطاعات التجارية والصناعية والزراعية والسكنية، وفق أعلى معايير الجودة والسلامة في المملكة العربية السعودية.",
     quickTitle: "الوصول السريع",
     quick: [
       { l: "الرئيسية", to: "/ar" },
@@ -1500,14 +1540,6 @@ export const footer = {
       { l: "حلول الطاقة الشمسية", to: "/ar/solar-solutions" },
       { l: "المنتجات", to: "/ar/products" },
       { l: "الخدمات", to: "/ar/services" },
-    ],
-    identityTitle: "الهوية المؤسسية",
-    identity: [
-      { k: "الهوية المؤسسية", v: "شهادة السجل التجاري — مسجلة باسم أنظمة طاقة الأرض المستقبلية" },
-      {
-        k: "التأهيل المرخص للـ EPC",
-        v: "ربط مشاريع الطاقة الكهروضوئية الصغيرة بالشبكة حتى 2 ميجاواط",
-      },
     ],
     contactTitle: "التواصل",
     rights: "© " + new Date().getFullYear() + " فيوتشر إيرث لأنظمة الطاقة. جميع الحقوق محفوظة.",

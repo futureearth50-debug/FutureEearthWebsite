@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, Clock, Linkedin, Instagram, Facebook, ShieldCheck } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Linkedin, Instagram, Facebook } from "lucide-react";
 import { footer, contactInfo, ui, type Locale } from "@/content/site";
 import { Brand } from "./Brand";
 
@@ -48,27 +48,22 @@ export function Footer({ locale }: { locale: Locale }) {
             <div className="fe-eyebrow no-tick" style={{ color: "var(--fe-steel)" }}>{f.contactTitle}</div>
             <div className="mt-5 space-y-3.5 text-sm" style={{ color: "rgba(255,255,255,0.78)" }}>
               <div className="flex items-start gap-3"><MapPin size={17} style={{ marginTop: 2, color: "var(--fe-amber)", flexShrink: 0 }} /><span style={{ lineHeight: 1.55 }}>{contactInfo.address[locale]}</span></div>
-              <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-3 hover:text-white transition-colors"><Phone size={17} style={{ color: "var(--fe-amber)", flexShrink: 0 }} /><span dir="ltr">{contactInfo.phoneDisplay}</span></a>
+              {/* Both lines stay independently dialable rather than sharing one tel: */}
+              <div className="flex items-start gap-3">
+                <Phone size={17} style={{ marginTop: 2, color: "var(--fe-amber)", flexShrink: 0 }} />
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-1" dir="ltr">
+                  <a href={`tel:${contactInfo.phone}`} className="hover:text-white transition-colors">{contactInfo.phoneDisplay}</a>
+                  <span aria-hidden style={{ color: "rgba(255,255,255,0.35)" }}>/</span>
+                  <a href={`tel:${contactInfo.phoneAlt}`} className="hover:text-white transition-colors">{contactInfo.phoneAltDisplay}</a>
+                </span>
+              </div>
               <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-3 hover:text-white transition-colors"><Mail size={17} style={{ color: "var(--fe-amber)", flexShrink: 0 }} /><span>{contactInfo.email}</span></a>
               <div className="flex items-start gap-3"><Clock size={17} style={{ marginTop: 2, color: "var(--fe-amber)", flexShrink: 0 }} /><span style={{ lineHeight: 1.55 }}>{contactInfo.hours[locale]}</span></div>
             </div>
           </div>
         </div>
 
-        {/* Corporate identification band */}
-        <div className="mt-12 pt-8 grid gap-5 sm:grid-cols-2" style={{ borderTop: "1px solid rgba(255,255,255,0.09)" }}>
-          {f.identity.map((id) => (
-            <div key={id.k} className="flex items-start gap-3">
-              <ShieldCheck size={18} style={{ color: "var(--fe-steel)", marginTop: 2, flexShrink: 0 }} />
-              <div>
-                <div className="fe-mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fe-steel-2)" }}>{id.k}</div>
-                <div className="mt-1" style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.8)", lineHeight: 1.5 }}>{id.v}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="fe-hairline-dark my-8" />
+        <div className="fe-hairline-dark mt-12 mb-8" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}>{f.rights}</div>

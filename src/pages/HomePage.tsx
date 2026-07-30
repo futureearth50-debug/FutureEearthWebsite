@@ -4,14 +4,13 @@ import { Link } from "@tanstack/react-router";
 import { home, ui, type Locale } from "@/content/site";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal, SplitHeadline } from "@/components/site/Reveal";
-import { StatCounter } from "@/components/site/StatCounter";
 import { LogoWall } from "@/components/site/LogoWall";
 import { CTARibbon } from "@/components/site/Sections";
-import { HomeSolarSolutions, HomeFeaturedProducts, HomeServices, HomeContactCTA } from "@/components/site/HomeSections";
+import { HomeServices, HomeContactCTA } from "@/components/site/HomeSections";
 import { getLenis } from "@/lib/motion";
 
-import monogram from "@/assets/brand/future-earth-monogram.png";
 import heroImg from "@/assets/projects/rooftop-array-complex.webp";
+import heroShowcaseImg from "@/assets/projects/ground-mount-desert.webp";
 import villageImg from "@/assets/projects/rooftop-array-inspection.webp";
 import munajemImg from "@/assets/projects/rooftop-panel-install.webp";
 import dewaImg from "@/assets/projects/solar-substation-grid.webp";
@@ -45,8 +44,11 @@ export function HomePage({ locale }: { locale: Locale }) {
   return (
     <SiteLayout locale={locale}>
       {/* ============================ HERO ============================ */}
+      {/* Centred at every width. Top padding clears the fixed 78px header; the
+          matching bottom padding keeps the stack optically centred on mobile
+          instead of pinning it up and pooling the slack underneath. */}
       <section
-        className="relative overflow-hidden fe-blueprint-dark flex items-start lg:items-center min-h-[100svh] pt-24 pb-10 lg:pt-36 lg:pb-12"
+        className="relative overflow-hidden fe-blueprint-dark flex items-center min-h-[100svh] pt-28 pb-20 lg:pt-36 lg:pb-12"
         style={{ background: "var(--fe-navy)", color: "white" }}
       >
         <div className="absolute inset-0">
@@ -59,10 +61,9 @@ export function HomePage({ locale }: { locale: Locale }) {
           <div className="grid lg:grid-cols-[1.55fr_1fr] gap-12 lg:gap-16 items-center">
             {/* Left — headline */}
             <div>
-              <Reveal><div className="fe-eyebrow" style={{ color: "var(--fe-amber)" }}>{c.eyebrow}</div></Reveal>
               <SplitHeadline
                 text={c.heroTitle}
-                className="fe-display mt-6"
+                className="fe-display"
                 style={{ fontSize: "clamp(2.15rem,4.7vw,4.15rem)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.05, maxWidth: "17ch" }}
               />
               <Reveal delay={0.35}>
@@ -80,29 +81,32 @@ export function HomePage({ locale }: { locale: Locale }) {
               </Reveal>
             </div>
 
-            {/* Right — brand mark */}
+            {/* Right — live solar installation */}
             <Reveal delay={0.55}>
-              <div className="relative flex items-center justify-center" style={{ padding: "clamp(1rem,4vw,3rem)" }}>
+              <div className="relative">
                 <div
                   className="absolute rounded-full"
                   style={{
-                    inset: "10%",
-                    background: "radial-gradient(closest-side, rgba(245,166,35,0.20), transparent 72%)",
-                    filter: "blur(28px)",
+                    inset: "8%",
+                    background: "radial-gradient(closest-side, rgba(245,166,35,0.22), transparent 72%)",
+                    filter: "blur(34px)",
                   }}
                 />
-                <img
-                  src={monogram}
-                  alt="Future Earth Energy Systems"
-                  width={256}
-                  height={256}
-                  className="relative"
+                {/* Landscape on stacked layouts, portrait once it sits beside the headline */}
+                <div
+                  className="fe-frame fe-frame-zoom relative aspect-[16/10] lg:aspect-[4/5]"
                   style={{
-                    width: "clamp(220px,36vw,420px)",
-                    height: "auto",
-                    filter: "drop-shadow(0 24px 50px rgba(0,0,0,0.4))",
+                    borderRadius: "var(--fe-r-lg)",
+                    border: "1px solid rgba(143,180,214,0.18)",
+                    boxShadow: "0 30px 70px rgba(0,0,0,0.45)",
                   }}
-                />
+                >
+                  <img src={heroShowcaseImg} alt="Future Earth engineers commissioning a ground-mounted solar array" />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(180deg, rgba(10,27,46,0) 50%, rgba(10,27,46,0.5) 100%)" }}
+                  />
+                </div>
               </div>
             </Reveal>
           </div>
@@ -121,12 +125,10 @@ export function HomePage({ locale }: { locale: Locale }) {
             <div className="lg:sticky lg:top-32">
               <Reveal><div className="fe-eyebrow">{c.sectorsEyebrow}</div></Reveal>
               <Reveal delay={0.1}>
-                <h2 className="fe-display fe-h2 mt-4" style={{ fontWeight: 600, maxWidth: "12ch" }}>{c.sectorsTitle}</h2>
+                <h2 className="fe-display fe-h2 mt-4" style={{ fontWeight: 600, maxWidth: "16ch" }}>{c.sectorsTitle}</h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <div className="mt-8 fe-mono" style={{ fontSize: 12, letterSpacing: "0.14em", color: "var(--fe-slate-2)", textTransform: "uppercase" }}>
-                  05 {isRtl ? "قطاعات هندسية" : "Engineering Sectors"}
-                </div>
+                <p className="fe-lead mt-6" style={{ maxWidth: 460 }}>{c.sectorsLead}</p>
               </Reveal>
             </div>
 
@@ -136,7 +138,6 @@ export function HomePage({ locale }: { locale: Locale }) {
                 return (
                   <Reveal key={i} delay={i * 0.06}>
                     <Link to={links[i] as string} className="group flex items-center gap-5 md:gap-7 py-6 border-t transition-colors" style={{ borderColor: "var(--fe-line)" }}>
-                      <span className="fe-index" style={{ fontSize: "0.95rem", minWidth: 34 }}>0{i + 1}</span>
                       <span className="grid place-items-center rounded-xl transition-all duration-500 group-hover:scale-105" style={{ width: 52, height: 52, background: "var(--fe-cloud)", color: "var(--fe-navy)", flexShrink: 0 }}>
                         <Icon size={23} />
                       </span>
@@ -154,9 +155,6 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* ==================== SOLAR ENERGY SOLUTIONS ==================== */}
-      <HomeSolarSolutions locale={locale} />
-
       {/* ==================== VERIFIED TRACK RECORD ==================== */}
       <section id="track-record" className="relative overflow-hidden fe-blueprint-dark fe-section" style={{ background: "var(--fe-grad-dark)", color: "white" }}>
         <div className="fe-glow-steel" />
@@ -169,16 +167,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               </Reveal>
             </div>
             <Reveal delay={0.2}>
-              <div className="lg:pb-2">
-                <div className="flex items-end gap-3">
-                  <div className="fe-display" style={{ fontSize: "clamp(3.5rem,8vw,6rem)", fontWeight: 600, letterSpacing: "-0.04em", lineHeight: 0.9, color: "var(--fe-amber)" }}>
-                    <StatCounter value={c.trackLeadValue} suffix="+" unit="" label="" tone="light" bare />
-                  </div>
-                  <div className="fe-mono pb-2" style={{ fontSize: 14, color: "var(--fe-steel)" }}>MW</div>
-                </div>
-                <div className="fe-mono mt-1" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fe-steel-2)" }}>{c.trackLeadLabel}</div>
-                <p className="mt-4" style={{ color: "rgba(255,255,255,0.72)", lineHeight: 1.65, maxWidth: 460 }}>{c.trackLeadBody}</p>
-              </div>
+              <p className="lg:pb-2" style={{ color: "rgba(255,255,255,0.72)", lineHeight: 1.7, fontSize: "1.03rem", maxWidth: 560 }}>{c.trackLead}</p>
             </Reveal>
           </div>
 
@@ -204,9 +193,6 @@ export function HomePage({ locale }: { locale: Locale }) {
           </Reveal>
         </div>
       </section>
-
-      {/* ==================== FEATURED PRODUCTS ==================== */}
-      <HomeFeaturedProducts locale={locale} />
 
       {/* ==================== VALUE & CERTIFICATIONS ==================== */}
       <section className="fe-section" style={{ background: "var(--fe-paper)" }}>
@@ -255,19 +241,13 @@ export function HomePage({ locale }: { locale: Locale }) {
   );
 }
 
-function ProjectTile({ p, img, large = false }: { p: { capacity: string; kwp: string; title: string; kicker: string; body: string }; img: string; large?: boolean }) {
+function ProjectTile({ p, img, large = false }: { p: { capacity: string; title: string; body: string }; img: string; large?: boolean }) {
   return (
     <div className="fe-frame fe-frame-zoom group relative h-full" style={{ minHeight: large ? 420 : 240, borderRadius: "var(--fe-r-lg)", border: "1px solid rgba(143,180,214,0.15)" }}>
       <img src={img} alt={p.title} loading="lazy" />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,27,46,0.15) 0%, rgba(10,27,46,0.55) 45%, rgba(10,27,46,0.93) 100%)" }} />
       <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="fe-mono" style={{ fontSize: 11, padding: "4px 9px", borderRadius: 999, background: "rgba(245,166,35,0.16)", color: "var(--fe-amber)", border: "1px solid rgba(245,166,35,0.3)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{p.kicker}</span>
-        </div>
-        <div className="flex items-baseline gap-2.5">
-          <span className="fe-display" style={{ fontSize: large ? "clamp(2.6rem,5vw,3.6rem)" : "2rem", fontWeight: 600, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>{p.capacity}</span>
-          <span className="fe-mono" style={{ fontSize: 12, color: "var(--fe-steel)" }}>{p.kwp}</span>
-        </div>
+        <div className="fe-display" style={{ fontSize: large ? "clamp(2.6rem,5vw,3.6rem)" : "2rem", fontWeight: 600, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>{p.capacity}</div>
         <h3 className="fe-display mt-2.5" style={{ fontSize: large ? "1.5rem" : "1.2rem", fontWeight: 600, color: "white" }}>{p.title}</h3>
         <p className="mt-2" style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.9rem", lineHeight: 1.55, maxWidth: 440 }}>{p.body}</p>
       </div>

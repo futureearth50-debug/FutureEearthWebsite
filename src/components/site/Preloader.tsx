@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
-import logo from "@/assets/brand/future-earth-logo.png";
+import logo from "@/assets/brand/future-earth-logo-light.png";
 
 export function Preloader() {
   const [gone, setGone] = useState(false);
@@ -18,7 +18,7 @@ export function Preloader() {
     <div className="fe-preloader">
       <div className="fe-pre-panel absolute inset-0 fe-blueprint-dark" style={{ background: "var(--fe-grad-dark)" }} />
       <div className="relative z-10 flex flex-col items-center gap-6">
-        <img src={logo} alt="Future Earth Energy Systems" className="fe-pre-logo fe-logo-knockout" style={{ height: 46, width: "auto" }} />
+        <img src={logo} alt="Future Earth Energy Systems" className="fe-pre-logo" style={{ height: 46, width: "auto" }} />
         <div style={{ width: 180, height: 2, background: "rgba(255,255,255,0.12)", borderRadius: 999, overflow: "hidden" }}>
           <div className="fe-pre-bar-fill" style={{ height: "100%", width: "100%", background: "var(--fe-grad-sun)" }} />
         </div>

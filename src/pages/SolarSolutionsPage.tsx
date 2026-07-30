@@ -52,16 +52,19 @@ export function SolarSolutionsPage({ locale }: { locale: Locale }) {
                       </h2>
                       <p className="fe-lead mt-4">{p.short}</p>
 
-                      <ul className="mt-6 flex flex-col gap-2.5">
+                      {/* mb on the list, not mt on the button: the card's
+                          `margin-top: auto` (which bottom-aligns the button)
+                          overrides any top margin set here. */}
+                      <ul className="mt-6 mb-10 lg:mb-12 flex flex-col gap-3">
                         {p.pillars.map((pl) => (
                           <li key={pl.t} className="flex items-start gap-2.5">
-                            <CheckCircle2 size={16} style={{ color: "var(--fe-green)", marginTop: 3, flexShrink: 0 }} />
-                            <span style={{ color: "var(--fe-slate)", fontSize: "0.93rem", lineHeight: 1.5 }}>{pl.t}</span>
+                            <CheckCircle2 size={16} style={{ color: "var(--fe-green)", marginTop: 4, flexShrink: 0 }} />
+                            <span style={{ color: "var(--fe-slate)", fontSize: "0.93rem", lineHeight: 1.7 }}>{pl.t}</span>
                           </li>
                         ))}
                       </ul>
 
-                      <span className="fe-btn fe-btn-dark mt-8" style={{ padding: "0.78rem 1.3rem", fontSize: "0.88rem" }}>
+                      <span className="fe-btn fe-btn-dark" style={{ padding: "0.78rem 1.3rem", fontSize: "0.88rem" }}>
                         {isRtl ? "عرض الحل بالكامل" : "View full solution"}
                         <ArrowRight size={15} className="fe-flip-x" />
                       </span>

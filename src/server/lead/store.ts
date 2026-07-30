@@ -42,8 +42,8 @@ class FileLeadStore implements LeadStore {
           locale: record.locale,
           qualification: record.analysis.qualification,
           score: record.analysis.score,
-          name: record.analysis.contact.name ?? "",
-          company: record.analysis.contact.company ?? "",
+          name: record.analysis.profile.fullName ?? "",
+          company: record.analysis.profile.company ?? "",
         }) + "\n";
       await fs.appendFile(path.join(this.dir, "index.jsonl"), indexLine, "utf8");
     } catch (err) {

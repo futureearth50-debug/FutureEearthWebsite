@@ -4,13 +4,13 @@ Part 1: Main Hero Section (القسم العلوي الرئيسي)
 إيضاح هوية وحجم المنشأة فوراً كمتعاقد معتمد للمشاريع الكبرى وتوجيه الزائر لنموذج الفلترة.
 نصوص المحتوى بالإنجليزية:
 Main Corporate Headline:
-Turnkey Solar Infrastructure and Advanced Energy Storage Systems Across Saudi Arabia
+More efficient energy... lower costs, and greater continuity for your business.
 Supporting Value Proposition Text:
-Future Earth is a certified contractor engineering utility scale solar networks and industrial lithium battery storage compliant with Ministry of Energy and SEC regulations. Backed by over 100 Megawatts of verified regional execution we manage the complete project lifecycle from technical energy analysis to grid interconnection for major factories commercial complexes and developments.
+Future Earth is a certified contractor delivering integrated solar energy and energy storage solutions, from studies and design through to execution, operation and maintenance, with full commitment to the highest standards of quality and safety.
 Primary Action Button Text:
 Request Technical Consultation
 Secondary Action Button Text:
-View Our Mega Projects
+Our Projects
 
 
 
@@ -23,16 +23,20 @@ Part 2: Quick Sector Access Navigation (قسم الأيقونات السريع)
 الشرح والهدف التسويقي:
 تقسيم القدرات التشغيلية لـ 5 قطاعات هندسية واضحة ومباشرة لتسهيل تصفح العميل المتوقع.
 نصوص المحتوى بالإنجليزية:
+Section Headline:
+Integrated energy solutions... from a single engineering partner.
+Section Supporting Text:
+We turn your energy requirements into practical, dependable solutions through integrated engineering services covering every stage of the project, from concept through to operation.
 Sector Category 1 Title:
-Commercial and Industrial Rooftop Solar
+Rooftop Solar Energy Systems
 Sector Category 2 Title:
-Ground Mounted Solar Fields
+Ground Mounted Solar Power Plants
 Sector Category 3 Title:
-Hybrid Solutions and Microgrids
+Hybrid Systems and Smart Grid Solutions
 Sector Category 4 Title:
-Lithium Battery Energy Storage
+Battery Energy Storage Systems (BESS)
 Sector Category 5 Title:
-Energy Infrastructure Financing Models
+Energy Project Financing Solutions
 
 
 
@@ -46,12 +50,12 @@ Part 3: Verified Track Record & Engineering Capabilities (قسم أرقام وم
 إبراز المشاريع الكبرى والعملاقة المنفذة بالفعل بالأرقام الرسمية الموثقة لبناء مصداقية فورية. 
 نصوص المحتوى بالإنجليزية:
 Section Headline:
-Utility Scale Solar Infrastructure Deployed Across the GCC
-Column 1: Total Megawatts Deployed
-Over 100 Megawatts of verified solar networks executing seamless grid connection globally and regionally.
-Column 2: 1.7 Megawatt Mega Project The Village Mall Jeddah Engineering supply and full commissioning of a 1702 kWp rooftop solar infrastructure. 
-Column 3: 1.3 Megawatt Industrial Project Al Munajem Foods Riyadh Complete execution of a 1358 kWp rooftop solar network for industrial cold storage. 
-Column 4: Regional Substation Interconnection DEWA and Alfanar Delivering a 262 kWp engineered solar integration for the Dubai Shamal Substation. 
+Engineering projects that embody our expertise in energy solutions
+Section Supporting Text:
+We take pride in delivering solar energy projects and integrated energy systems for our clients across the Kingdom of Saudi Arabia and the GCC, built to the highest engineering standards and to a quality that guarantees long-term performance and reliability.
+Column 1: 1.7 Megawatt The Village Mall Jeddah Engineering supply and full commissioning of a 1702 kWp rooftop solar infrastructure. 
+Column 2: 1.3 Megawatt Al Munajem Foods Riyadh Complete execution of a 1358 kWp rooftop solar network for industrial cold storage. 
+Column 3: 262 kWp DEWA and Alfanar Delivering a 262 kWp engineered solar integration for the Dubai Shamal Substation. 
 Section Action Call (CTA):
 Request Your Facility Survey
 
@@ -64,12 +68,14 @@ Part 4: Strategic Value Proposition & Certifications (قسم المميزات و
 الشرح والهدف التسويقي:
 استعراض الاعتمادات السعودية الرسمية والـ ISO التي تعكس أعلى مستويات الاحترافية والأمان. 
 نصوص المحتوى بالإنجليزية:
+Section Eyebrow:
+Why Future Earth?
 Section Headline:
-Engineered for High Yield Operational and Financial Return
-Feature 1: Maximized Financial ROI Engineered setups delivering up to 6 times the initial capital investment with a 30 year operational lifespan. 
-Feature 2: Ministry of Energy Certified Fully qualified by the Saudi Ministry of Energy contractor committee for solar photovoltaic networks up to 2 Megawatts. 
-Feature 3: Tier 1 Regulatory Compliance Backed by triple ISO certifications ISO 9001 Quality ISO 45001 Safety ISO 14001 Environment and certified SEC installers. 
-Feature 4: Full Lifecycle Ownership Total control over engineering workflow and direct procurement management from global factories to local site deployment. 
+We design and deliver integrated energy solutions that raise operational efficiency and achieve a sustainable return on investment.
+Feature 1: Engineering solutions that deliver sustainable investment value Engineering design that contributes to a return on investment of up to 6 times the capital over the operational lifetime of the system, depending on the nature of the project and its energy consumption. 
+Feature 2: Ministry of Energy Accreditation Qualified to design, execute and grid-connect solar energy systems up to a capacity of 2 Megawatts, in accordance with the requirements of the Ministry of Energy and the Saudi Electricity Company. 
+Feature 3: World-class standards of quality and excellence We operate to ISO 9001 for quality, ISO 14001 for environmental management and ISO 45001 for occupational health and safety, ensuring projects are delivered efficiently and reliably. 
+Feature 4: Integrated engineering solutions We handle every stage of the project, beginning with studies and design, through procurement and execution, and on to operation and maintenance, to guarantee delivery quality and fully integrated solutions. 
 
 
 
@@ -84,13 +90,13 @@ Part 5: Institutional Conversion Ribbon & Fixed Corporate Footer (قسم الت�
 مسار الإغلاق البيعي والتوجيه لنموذج الفلترة مع جمع داتا ومواقع الاتصال الرسمية للمنشأة. 
 نصوص المحتوى بالإنجليزية:
 Lower Action Ribbon Headline:
-Transition Your Facility to Renewable Infrastructure Today
+Turn your energy consumption into a smart investment today
 Lower Action Ribbon Subtext:
-Initiate a comprehensive energy consumption analysis and engineering survey with our certified team to optimize operational expenditures
+Start with a comprehensive engineering assessment of your facility to identify the best energy solutions to lower operating costs and raise performance efficiency.
 Lower Action Ribbon Button Text:
 Request Customized Energy Analysis
 Corporate Footer Description Text:
-Future Earth is a certified renewable energy contractor engineering high performance solar networks and advanced lithium energy storage systems compliant with regional utility regulatory codes for industrial commercial and residential developments across the Kingdom of Saudi Arabia
+Future Earth Energy Systems is an engineering partner accredited by the Ministry of Energy, specialised in renewable energy solutions and energy storage systems. We provide design, engineering, procurement, execution, operation and maintenance services for energy projects across the commercial, industrial, agricultural and residential sectors, to the highest standards of quality and safety in the Kingdom of Saudi Arabia.
 Quick Access Directory Links:
 Home
 About Us
@@ -99,20 +105,38 @@ Products
 Services
 
 
-Official Corporate Identification & Contact Data:
-Corporate Identification: 
-Company Registration Certificate Registered under Future Earth Energy Systems 
-Licensed EPC Qualification: 
-Small Scale Photovoltaic Grid Interconnection up to 2 Megawatts 
+Official Contact Data:
 Head Office Address: 
 Office 40 View Square Abi Bakr As Siddiq Road Al Yasmeen Riyadh 13326 Kingdom of Saudi Arabia 
 Technical Operations Inquiries: 
-Phone +966118108828 
+Phone +966 11 810 8828 / +966 569 757575 
 Central Communications: Email: contact@fe-ksa.com 
 Authorized Operating Hours: 
 Sunday to Thursday 
 09:00 AM to 05:00 PM 
 Friday and Saturday Closed 
+
+Part 6: Our Services (قسم الخدمات)
+نصوص المحتوى بالإنجليزية:
+Section Headline:
+Integrated engineering services... from concept to operation
+Section Supporting Text:
+From the very first idea to sustainable operation, we provide integrated engineering services that ensure professional delivery, operational efficiency and long-term investment value.
+Service 1: Design and Execution (EPC) Engineering design, procurement, execution, testing and commissioning to the highest standards of quality and safety. 
+Service 2: Lifetime Support 24/7 smart monitoring, rapid field response, scheduled preventative maintenance and 25-year warranty security. 
+Service 3: Purchasing Models Direct system purchase or a zero-upfront Solar Power Purchase Agreement (PPA), tailored to your operation. 
+
+Part 7: Clients & Partners (قسم العملاء والشركاء)
+نصوص المحتوى بالإنجليزية:
+Section Headline:
+We are proud of the trust our clients and partners place in us worldwide
+Section Supporting Text:
+We work with leading government entities, industrial institutions and global manufacturers to deliver reliable and sustainable energy solutions.
+Clients Row Label:
+Our Clients
+Partners Row Label:
+Technology Partners & Suppliers
+
 توجيهات التنفيذ للمصمم والمطور (Technical Instructions)
 ربط نموذج الفلترة والتصنيف: كافة أزرار الـ CTA يتم ربطها فوراً بنموذج فحص وتصنيف البيانات بداخل صفحة Contact Us لفرز الكيانات الجادة تلقائياً.
 إخراج اللوجوهات والعملاء: يتم ترتيب لوجوهات العملاء والشركاء والموردين المرفقة مثل المنجم وهيئة دبي وحامات والنابودة والحبيب وهايب وتوال وذا فيلج ومسك وايه بي بي والفنار والسويدي وهواوي وجينكو ولايبيس ولونجي ومصدر وجي آيه وشنايدر وصن جرو وشركة إس إيه في في شريط هندسي متحرك رصين بلون موحد مستوحى من ريفرنس Meras cpa. 

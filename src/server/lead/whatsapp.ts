@@ -146,23 +146,30 @@ export function buildLeadMessage(args: {
   messages: ChatMessage[];
 }): string {
   const { leadId, locale, analysis, messages } = args;
-  const c = analysis.contact;
+  const p = analysis.profile;
   const lines: string[] = [];
+  const loc = [p.city, p.country].filter(Boolean).join(", ");
 
   lines.push(
     `${TIER_ICON[analysis.qualification]} *New Lead — ${analysis.qualification}* (${analysis.score}/100)`,
   );
   lines.push(`Future Earth · AI Lead Qualification · ${leadId}`);
   lines.push("");
-  if (c.name) lines.push(`👤 *Name:* ${c.name}${c.role ? ` — ${c.role}` : ""}`);
-  if (c.company) lines.push(`🏢 *Company:* ${c.company}`);
-  if (c.phone) lines.push(`📱 *Phone:* ${c.phone}`);
-  if (c.email) lines.push(`✉️ *Email:* ${c.email}`);
-  if (c.location) lines.push(`📍 *Location:* ${c.location}`);
-  if (analysis.projectType) lines.push(`⚡ *Project:* ${analysis.projectType}`);
-  if (analysis.timeline) lines.push(`🗓️ *Timeline:* ${analysis.timeline}`);
-  if (analysis.budget) lines.push(`💰 *Budget:* ${analysis.budget}`);
+  if (p.fullName) lines.push(`👤 *Name:* ${p.fullName}`);
+  if (p.company) lines.push(`🏢 *Company:* ${p.company}${p.businessType ? ` — ${p.businessType}` : ""}`);
+  if (p.industry) lines.push(`🏭 *Industry:* ${p.industry}`);
+  if (p.phone) lines.push(`📱 *Phone:* ${p.phone}`);
+  if (p.email) lines.push(`✉️ *Email:* ${p.email}`);
+  if (p.preferredContact) lines.push(`☎️ *Prefers:* ${p.preferredContact}`);
+  if (loc) lines.push(`📍 *Location:* ${loc}`);
+  if (p.projectType) lines.push(`⚡ *Project:* ${p.projectType}`);
+  if (p.timeline) lines.push(`🗓️ *Timeline:* ${p.timeline}`);
+  if (p.budget) lines.push(`💰 *Budget:* ${p.budget}`);
+  if (p.goals) lines.push(`🎯 *Goals:* ${p.goals}`);
+  if (p.painPoints) lines.push(`⚠️ *Pain points:* ${p.painPoints}`);
+  if (p.currentSolution) lines.push(`🔧 *Current solution:* ${p.currentSolution}`);
   lines.push("");
+  if (analysis.buyingIntent) lines.push(`📈 *Buying intent:* ${analysis.buyingIntent}`);
   lines.push(`📝 *Summary:*\n${analysis.summary}`);
   if (analysis.insights.length) {
     lines.push("");
