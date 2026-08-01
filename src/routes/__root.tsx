@@ -51,7 +51,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, interactive-widget=resizes-content" },
       { title: "Future Earth Energy Systems — Solar & Storage at Scale in Saudi Arabia" },
       { name: "description", content: "Future Earth engineers utility-scale solar, rooftop, hybrid microgrid and lithium battery storage systems across Saudi Arabia. 100+ MW installed, 15+ years experience." },
       { name: "author", content: "Future Earth Energy Systems" },

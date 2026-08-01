@@ -14,6 +14,7 @@ import { X, ChevronDown, RotateCcw, MessageSquareText } from "lucide-react";
 import { chatWidget, brand, leadAssistant, type Locale } from "@/content/site";
 import monogram from "@/assets/brand/future-earth-monogram.png";
 import { useLeadChat } from "@/features/lead/useLeadChat";
+import { getLenis } from "@/lib/motion";
 import {
   MessageRow,
   TypingRow,
@@ -162,12 +163,20 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   }, [open]);
 
   // Lock background scroll while the full-screen sheet is open on mobile.
+  // Lenis drives page scroll independently of native `overflow`, so it must
+  // be stopped too — otherwise it can keep animating the page behind the
+  // sheet (most visibly when the keyboard opens and the browser tries to
+  // scroll the focused input into view), which is what let page content
+  // peek through the panel on some mobile browsers.
   useEffect(() => {
     if (!open || !window.matchMedia("(max-width: 640px)").matches) return;
     const prev = document.body.style.overflow;
+    const lenis = getLenis();
+    lenis?.stop();
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
+      lenis?.start();
     };
   }, [open]);
 

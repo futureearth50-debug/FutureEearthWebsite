@@ -1271,6 +1271,7 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
   width: min(290px, calc(100vw - 2rem));
   padding: 0.75rem 1.9rem 0.75rem 0.8rem;
   border-radius: 20px; text-align: start; cursor: pointer;
+  background: var(--fe-white);
   background: color-mix(in srgb, var(--fe-white) 92%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3);
   border: 1px solid rgba(255,255,255,0.65);
@@ -1337,6 +1338,7 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
   height: min(72vh, 640px);
   display: flex; flex-direction: column; overflow: hidden;
   border-radius: 26px;
+  background: var(--fe-white);
   background: color-mix(in srgb, var(--fe-white) 86%, transparent);
   -webkit-backdrop-filter: blur(22px) saturate(1.4);
   backdrop-filter: blur(22px) saturate(1.4);
@@ -1404,6 +1406,7 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
   flex: 1; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
   padding: 1.15rem 1rem;
   display: flex; flex-direction: column; gap: 0.85rem;
+  background: var(--fe-paper);
   background:
     radial-gradient(120% 55% at 50% 0%, rgba(143,180,214,0.10) 0%, transparent 60%),
     color-mix(in srgb, var(--fe-paper) 70%, transparent);
@@ -1435,6 +1438,7 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
 .fe-cw-foot {
   padding: 0.7rem 0.8rem 0.85rem;
   border-top: 1px solid var(--fe-line);
+  background: var(--fe-white);
   background: color-mix(in srgb, var(--fe-white) 85%, transparent);
 }
 .fe-cw-disclaimer {
@@ -1507,10 +1511,22 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
     transform-origin: bottom center;
     transform: translateY(100%);
     -webkit-backdrop-filter: none; backdrop-filter: none;
-    background: color-mix(in srgb, var(--fe-white) 97%, transparent);
+    background: var(--fe-white);
   }
-  .fe-cw-head { padding-top: calc(0.8rem + env(safe-area-inset-top, 0px)); }
+  /* Condensed header — reclaim vertical space on small screens, doubly
+     important once the keyboard eats ~40% of viewport height. */
+  .fe-cw-head { padding: 0.55rem 0.7rem; padding-top: calc(0.55rem + env(safe-area-inset-top, 0px)); gap: 0.55rem; }
+  .fe-cw-avatar { width: 34px; height: 34px; border-radius: 10px; }
+  .fe-cw-avatar img { width: 24px; height: 24px; }
+  .fe-cw-head-title { font-size: 0.88rem; }
+  .fe-cw-head-sub { font-size: 10.5px; margin-top: 1px; }
+  .fe-cw-iconbtn { width: 28px; height: 28px; }
+  .fe-cw-body { padding: 0.9rem 0.85rem; }
   .fe-cw-msg { max-width: 88%; }
+  .fe-cw-foot { padding: 0.55rem 0.7rem calc(0.6rem + env(safe-area-inset-bottom, 0px)); }
+  /* >=16px stops iOS Safari auto-zooming the page on textarea focus, which is
+     what turns a keyboard-open state into a visibly broken, mis-scaled layout. */
+  .fe-cw-foot .fe-la-textarea { font-size: 16px; }
   /* hide the launcher behind the full-screen sheet while open */
   .fe-cw[data-open="true"] .fe-cw-fab { opacity: 0; pointer-events: none; transform: scale(0.6); }
   .fe-cw[data-open="true"] .fe-cw-fab-pulse { display: none; }
@@ -1519,24 +1535,34 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
 /* Dark-mode support (scoped to the widget so the light site is untouched) */
 @media (prefers-color-scheme: dark) {
   .fe-cw-panel {
+    background: var(--fe-navy-2);
     background: color-mix(in srgb, var(--fe-navy-2) 84%, transparent);
     border-color: rgba(255,255,255,0.10);
   }
   .fe-cw-body {
+    background: var(--fe-navy);
     background:
       radial-gradient(120% 55% at 50% 0%, rgba(143,180,214,0.10) 0%, transparent 60%),
       color-mix(in srgb, var(--fe-navy) 70%, transparent);
   }
   .fe-cw-body .fe-la-bubble.ai { background: var(--fe-navy-3); color: #EAF1F8; border-color: rgba(255,255,255,0.10); }
   .fe-cw-body .fe-la-bubble.user { background: var(--fe-amber-deep); color: #1a0f00; }
-  .fe-cw-foot { background: color-mix(in srgb, var(--fe-navy-2) 88%, transparent); border-top-color: rgba(255,255,255,0.08); }
+  .fe-cw-foot {
+    background: var(--fe-navy-2);
+    background: color-mix(in srgb, var(--fe-navy-2) 88%, transparent);
+    border-top-color: rgba(255,255,255,0.08);
+  }
   .fe-cw-foot .fe-la-inputrow { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); }
   .fe-cw-foot .fe-la-textarea { color: #EAF1F8; }
   .fe-cw-chip { background: rgba(255,255,255,0.05); color: #EAF1F8; border-color: rgba(255,255,255,0.14); }
   .fe-cw-chip:hover:not(:disabled) { background: rgba(245,166,35,0.14); border-color: var(--fe-amber); }
   .fe-cw-time { color: var(--fe-steel-2); }
   .fe-cw-botavatar { background: #fff !important; border-color: rgba(255,255,255,0.2); }
-  .fe-cw-card { background: color-mix(in srgb, var(--fe-navy-2) 90%, transparent); border-color: rgba(255,255,255,0.12); }
+  .fe-cw-card {
+    background: var(--fe-navy-2);
+    background: color-mix(in srgb, var(--fe-navy-2) 90%, transparent);
+    border-color: rgba(255,255,255,0.12);
+  }
   .fe-cw-card-hook { color: #F4F8FC; }
   .fe-cw-card-dot { border-color: var(--fe-navy-2); }
   .fe-cw-card-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
@@ -1546,7 +1572,10 @@ html[dir="rtl"] .fe-la-inputrow { padding: 0.4rem 0.9rem 0.4rem 0.4rem; }
   .fe-cw-teaser-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
 }
 @media (prefers-color-scheme: dark) and (max-width: 640px) {
-  .fe-cw-panel { background: color-mix(in srgb, var(--fe-navy) 98%, transparent); }
+  .fe-cw-panel {
+    background: var(--fe-navy);
+    background: color-mix(in srgb, var(--fe-navy) 98%, transparent);
+  }
 }
 
 /* -------------------------------------------------------------------------- */
