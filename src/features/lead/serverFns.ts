@@ -25,6 +25,19 @@ const chatSchema = z.object({
     .max(60),
 });
 
+/** Optional provenance the client attaches to the analysis request. */
+const analyzeSchema = chatSchema.extend({
+  meta: z
+    .object({
+      page: z.string().max(300).optional(),
+      referrer: z.string().max(500).optional(),
+      userAgent: z.string().max(500).optional(),
+      conversationId: z.string().max(64).optional(),
+      startedAt: z.number().optional(),
+    })
+    .optional(),
+});
+
 export const chatStreamFn = createServerFn({ method: "POST" })
   .validator(chatSchema)
   .handler(async ({ data }): Promise<Response> => {
@@ -33,8 +46,8 @@ export const chatStreamFn = createServerFn({ method: "POST" })
   });
 
 export const analyzeLeadFn = createServerFn({ method: "POST" })
-  .validator(chatSchema)
+  .validator(analyzeSchema)
   .handler(async ({ data }): Promise<AnalyzeResponse> => {
     const { analyzeAndDispatch } = await import("@/server/lead/engine");
-    return analyzeAndDispatch(data.locale, data.messages);
+    return analyzeAndDispatch(data.locale, data.messages, data.meta);
   });

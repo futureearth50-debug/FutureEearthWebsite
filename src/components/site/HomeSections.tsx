@@ -190,10 +190,7 @@ export function HomeServices({ locale }: { locale: Locale }) {
             </Reveal>
           </div>
           <Reveal delay={0.2}>
-            <div className="flex flex-col items-start lg:items-end gap-5">
-              <div className="fe-mono" style={{ fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fe-steel-2)" }}>
-                0{c.items.length} {isRtl ? "قدرات هندسية" : "Engineering Capabilities"}
-              </div>
+            <div className="flex flex-col items-start lg:items-end">
               <Link to={servicesTo} className="fe-btn fe-btn-primary">
                 {c.viewAll} <ArrowRight size={17} className="fe-flip-x" />
               </Link>
@@ -210,7 +207,6 @@ export function HomeServices({ locale }: { locale: Locale }) {
                 <Link to={servicesTo} className="fe-svc">
                   <div className="fe-svc-head">
                     <span className="fe-svc-ic"><Icon size={23} /></span>
-                    <span className="fe-svc-no">{`0${i + 1}`}</span>
                   </div>
                   <h3 className="fe-svc-title">{s.t}</h3>
                   <p className="fe-svc-desc">{s.d}</p>

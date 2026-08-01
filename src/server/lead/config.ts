@@ -2,22 +2,21 @@
 //  LEAD QUALIFICATION — CONVERSATION CONFIG
 // ═══════════════════════════════════════════════════════════════════════════
 //
-//  THIS is the file the client edits. Everything below is DATA that drives the
-//  AI consultant: the persona, the questions it should work through, and the
-//  scoring rubric. The engine (prompts.ts / engine.ts) turns this into system
-//  instructions and never needs to change when the script changes.
+//  THIS is a file the client edits. It is DATA that drives the AI consultant:
+//  the persona, the opener, and the information to gather. The engine
+//  (prompts.ts / engine.ts) turns this into system instructions and never needs
+//  to change when the script changes.
 //
-//  To update the conversation when the client sends the final questions:
+//  To update the conversation:
 //    1. Edit `objectives` — add/remove/reorder items, tweak wording.
-//    2. Edit `qualification.tiers` and `scoringGuidance` for the scoring rules.
+//    2. For SCORING rules, edit `scoring.ts` (separate, so it can change alone).
 //    3. That's it. No component or server logic needs to change.
 //
 //  Notes:
-//    • Every visible string is bilingual ({ en, ar }) so the assistant can
-//      converse in the visitor's language.
+//    • Every visible string is bilingual ({ en, ar }).
 //    • `goal` describes WHAT to find out — the AI phrases the actual question
-//      naturally, one at a time. `label` is an internal name used in prompts.
-//    • `required: true` objectives must be covered before qualifying.
+//      naturally, one at a time, grouping related points. `label` is internal.
+//    • `required: true` objectives should be covered before qualifying.
 // ═══════════════════════════════════════════════════════════════════════════
 
 export interface Localized {
@@ -31,15 +30,8 @@ export interface LeadObjective {
   label: Localized;
   /** What the assistant needs to learn (guides how it asks). */
   goal: Localized;
-  /** Must be gathered before the lead can be qualified. */
+  /** Should be gathered before the lead can be qualified. */
   required: boolean;
-}
-
-export interface QualificationTier {
-  id: "Hot" | "Warm" | "Cold";
-  label: Localized;
-  /** Plain-language definition of what puts a lead in this tier. */
-  criteria: Localized;
 }
 
 export interface LeadConfig {
@@ -47,10 +39,6 @@ export interface LeadConfig {
   /** First thing the visitor sees — a warm opener + the first question. */
   opening: Localized;
   objectives: LeadObjective[];
-  qualification: {
-    tiers: QualificationTier[];
-    scoringGuidance: Localized;
-  };
   /** How the assistant wraps up once it has what it needs. */
   closing: Localized;
 }
@@ -65,15 +53,34 @@ export const leadConfig: LeadConfig = {
     ar: "أهلاً بك في أنظمة طاقة الأرض المستقبلية. أنا مستشارك في شؤون الطاقة — سأطرح عليك بعض الأسئلة السريعة لفهم مشروعك حتى يتمكن فريقنا الهندسي من إعداد العرض المناسب قبل تواصلنا معك. لنبدأ: بمن يشرّفني الحديث، ومع أي شركة أو جهة تعمل؟",
   },
 
-  // ── The question script ────────────────────────────────────────────────────
-  // Replace / extend these when the client provides the final list.
+  // ── The information to gather ───────────────────────────────────────────────
+  // Grouped so the assistant asks efficiently (a few related points per turn),
+  // never as a 16-question form. Together these cover the full lead profile.
   objectives: [
     {
       id: "identity",
-      label: { en: "Name, role & organization", ar: "الاسم والمسمى والجهة" },
+      label: { en: "Name, role & authority", ar: "الاسم والمسمى والصلاحية" },
       goal: {
-        en: "The visitor's name, their role, and the company/entity they represent.",
-        ar: "اسم الزائر ومسماه الوظيفي والشركة أو الجهة التي يمثّلها.",
+        en: "The visitor's full name, their role, and whether they are the decision-maker or influence the decision.",
+        ar: "الاسم الكامل للزائر ومسماه الوظيفي، وهل هو متخذ القرار أو يؤثر فيه.",
+      },
+      required: true,
+    },
+    {
+      id: "organization",
+      label: { en: "Company, business type & industry", ar: "الشركة ونوع النشاط والقطاع" },
+      goal: {
+        en: "The company or entity name, the type of business, and the industry/sector they operate in.",
+        ar: "اسم الشركة أو الجهة، ونوع النشاط التجاري، والقطاع/الصناعة التي يعملون بها.",
+      },
+      required: true,
+    },
+    {
+      id: "location",
+      label: { en: "Country & city", ar: "الدولة والمدينة" },
+      goal: {
+        en: "The country and city of the project site (affects design, regulations and site visits).",
+        ar: "دولة ومدينة موقع المشروع (تؤثر على التصميم والأنظمة والمعاينة).",
       },
       required: true,
     },
@@ -81,26 +88,26 @@ export const leadConfig: LeadConfig = {
       id: "projectType",
       label: { en: "Project type", ar: "نوع المشروع" },
       goal: {
-        en: "What kind of energy project they need: commercial/industrial rooftop solar, ground-mounted solar field, hybrid + battery storage, or a PPA/financing arrangement.",
-        ar: "نوع مشروع الطاقة المطلوب: طاقة شمسية لأسطح المباني التجارية/الصناعية، محطة أرضية، نظام هجين مع تخزين بالبطاريات، أو اتفاقية شراء طاقة/تمويل.",
+        en: "The kind of energy project: commercial/industrial rooftop solar, ground-mounted plant, hybrid + battery storage, or a PPA/financing arrangement.",
+        ar: "نوع مشروع الطاقة: طاقة شمسية لأسطح المباني التجارية/الصناعية، محطة أرضية، نظام هجين مع تخزين بالبطاريات، أو اتفاقية شراء طاقة/تمويل.",
       },
       required: true,
     },
     {
-      id: "facility",
-      label: { en: "Facility & scale", ar: "المنشأة والحجم" },
+      id: "scale",
+      label: { en: "Facility, scale & consumption", ar: "المنشأة والحجم والاستهلاك" },
       goal: {
-        en: "The facility type and rough scale — e.g. roof/land area, number of sites, or approximate system size in kW/MW if known.",
-        ar: "نوع المنشأة وحجمها التقريبي — مثل مساحة السطح/الأرض، عدد المواقع، أو الحجم التقريبي للنظام بالكيلوواط/الميجاواط إن وُجد.",
+        en: "The facility type and rough scale (roof/land area, number of sites, or kW/MW), and their approximate monthly electricity consumption or bill (SAR).",
+        ar: "نوع المنشأة وحجمها التقريبي (مساحة السطح/الأرض، عدد المواقع، أو الكيلوواط/الميجاواط)، ومتوسط استهلاك الكهرباء أو الفاتورة الشهرية تقريباً (بالريال).",
       },
       required: true,
     },
     {
-      id: "consumption",
-      label: { en: "Energy consumption / bill", ar: "الاستهلاك أو الفاتورة" },
+      id: "goals",
+      label: { en: "Goals, pain points & current solution", ar: "الأهداف والتحديات والحل الحالي" },
       goal: {
-        en: "Their approximate monthly electricity consumption or bill (SAR), to gauge system sizing and savings potential.",
-        ar: "متوسط استهلاك الكهرباء أو الفاتورة الشهرية تقريباً (بالريال)، لتقدير حجم النظام وإمكانية التوفير.",
+        en: "Their main goals (e.g. cut bills, reliability, sustainability), the pain points driving this, and any current/previous energy solution.",
+        ar: "أهدافهم الرئيسية (تقليل الفواتير، الموثوقية، الاستدامة)، والتحديات الدافعة لذلك، وأي حل طاقة حالي أو سابق.",
       },
       required: false,
     },
@@ -124,48 +131,14 @@ export const leadConfig: LeadConfig = {
     },
     {
       id: "contact",
-      label: { en: "Best contact channel", ar: "قناة التواصل المفضّلة" },
+      label: { en: "Contact details & preference", ar: "بيانات التواصل والتفضيل" },
       goal: {
-        en: "The best way and time for the sales team to reach them — phone/WhatsApp number and email.",
-        ar: "أفضل وسيلة ووقت لتواصل فريق المبيعات معهم — رقم الجوال/الواتساب والبريد الإلكتروني.",
+        en: "The best way to reach them — email and phone/WhatsApp — and their preferred contact method and time.",
+        ar: "أفضل وسيلة للتواصل معهم — البريد الإلكتروني ورقم الجوال/الواتساب — وقناتهم ووقتهم المفضّل.",
       },
       required: true,
     },
   ],
-
-  // ── Scoring rubric ─────────────────────────────────────────────────────────
-  qualification: {
-    tiers: [
-      {
-        id: "Hot",
-        label: { en: "Hot", ar: "ساخن" },
-        criteria: {
-          en: "Clear, sizable project with a near-term timeline (now or within ~3 months), a decision-maker, and budget or financing intent. Ready for immediate sales engagement.",
-          ar: "مشروع واضح وكبير بإطار زمني قريب (الآن أو خلال ~3 أشهر تقريباً)، مع متخذ قرار ووجود ميزانية أو نية تمويل. جاهز لتواصل مبيعات فوري.",
-        },
-      },
-      {
-        id: "Warm",
-        label: { en: "Warm", ar: "دافئ" },
-        criteria: {
-          en: "Genuine interest and a real project, but timeline, budget, or scope is still forming (3–12 months). Worth nurturing with a tailored proposal.",
-          ar: "اهتمام حقيقي ومشروع فعلي، لكن الإطار الزمني أو الميزانية أو النطاق ما زال يتشكّل (٣–١٢ شهراً). يستحق المتابعة بعرض مخصّص.",
-        },
-      },
-      {
-        id: "Cold",
-        label: { en: "Cold", ar: "بارد" },
-        criteria: {
-          en: "Early-stage research, no defined project or timeline, unclear authority, or out of scope. Low priority for immediate follow-up.",
-          ar: "مرحلة بحث مبكرة، دون مشروع أو إطار زمني محدد، أو صلاحية غير واضحة، أو خارج النطاق. أولوية منخفضة للمتابعة الفورية.",
-        },
-      },
-    ],
-    scoringGuidance: {
-      en: "Score 0–100. Weight most heavily: timeline urgency and readiness to buy (~35), project size/value (~25), budget or financing clarity (~20), decision-making authority (~10), and fit with Future Earth's solar + storage EPC scope (~10). Hot ≈ 75–100, Warm ≈ 45–74, Cold ≈ 0–44.",
-      ar: "الدرجة من ٠ إلى ١٠٠. أعطِ الوزن الأكبر لِـ: إلحاح الإطار الزمني والجاهزية للشراء (~٣٥)، حجم/قيمة المشروع (~٢٥)، وضوح الميزانية أو التمويل (~٢٠)، صلاحية اتخاذ القرار (~١٠)، ومدى ملاءمة المشروع لنطاق أعمال فيوتشر إيرث في الطاقة الشمسية والتخزين (~١٠). ساخن ≈ ٧٥–١٠٠، دافئ ≈ ٤٥–٧٤، بارد ≈ ٠–٤٤.",
-    },
-  },
 
   closing: {
     en: "Thank them warmly, confirm that our engineering/sales team will follow up shortly through their preferred channel, and set the expectation that a tailored proposal will be prepared. Keep it to two sentences.",
