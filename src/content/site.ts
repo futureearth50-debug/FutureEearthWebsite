@@ -1474,6 +1474,13 @@ export const chatWidget = {
     minimizeAria: "Minimize chat",
     title: "Energy Consultant",
     subtitle: "AI-powered · replies instantly",
+    nudge: "👋 Hi there! How can I help you save on energy today?",
+    fabCta: "Chat with us",
+    hooks: [
+      "💡 Cut your electricity bill",
+      "⚡ Get a free solar quote",
+      "🌱 Start saving on energy",
+    ],
     welcome:
       "Welcome to Future Earth Energy Systems 👋\n\nI'm your AI energy consultant — ask me about solar, storage, savings or pricing, and I'll help scope your project.\n\nHow can I help you today?",
     quickReplies: [
@@ -1495,6 +1502,13 @@ export const chatWidget = {
     minimizeAria: "تصغير المحادثة",
     title: "مستشار الطاقة",
     subtitle: "مدعوم بالذكاء الاصطناعي · يرد فوراً",
+    nudge: "👋 مرحباً! كيف أساعدك في توفير طاقتك اليوم؟",
+    fabCta: "تحدث معنا",
+    hooks: [
+      "💡 قلّل فاتورة الكهرباء",
+      "🔋 اسأل عن أنظمة التخزين",
+      "🌱 ابدأ بتوفير طاقتك",
+    ],
     welcome:
       "أهلاً بك في شركة فيوتشر إيرث لأنظمة الطاقة\n\nيسعدني مساعدتك في حلول الطاقة الشمسية وأنظمة تخزين الطاقة.\n\nكيف يمكنني مساعدتك اليوم؟",
     quickReplies: [

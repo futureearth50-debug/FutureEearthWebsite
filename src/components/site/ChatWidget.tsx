@@ -3,14 +3,14 @@
 //
 //  • Launcher FAB pinned to the bottom corner (side follows text direction).
 //  • Glass panel with premium open/close animation.
-//  • Proactive welcome teaser after a short delay.
+//  • Proactive animated launcher card with rotating prompts after a short delay.
 //  • Quick replies, typing indicator, timestamps, smooth auto-scroll.
 //  • Keyboard accessible (Esc closes, focus moves to the input on open).
 //  • All conversation state comes from `useLeadChat` (persisted across pages).
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { X, ChevronDown, RotateCcw } from "lucide-react";
+import { X, ChevronDown, RotateCcw, MessageSquareText } from "lucide-react";
 import { chatWidget, brand, leadAssistant, type Locale } from "@/content/site";
 import monogram from "@/assets/brand/future-earth-monogram.png";
 import { useLeadChat } from "@/features/lead/useLeadChat";
@@ -26,7 +26,8 @@ import { ResultCard } from "./chat/ResultCard";
 
 const OPEN_KEY = "fe-chat-open";
 const SEEN_KEY = "fe-chat-teaser-seen";
-const TEASER_DELAY = 6000;
+const CARD_DELAY = 3400; // let the page settle, then invite
+const HOOK_INTERVAL = 4200; // how often the rotating hook changes
 
 export function ChatWidget({ locale }: { locale: Locale }) {
   const isRtl = locale === "ar";
@@ -37,7 +38,8 @@ export function ChatWidget({ locale }: { locale: Locale }) {
 
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
-  const [teaser, setTeaser] = useState(false);
+  const [card, setCard] = useState(false);
+  const [hookIdx, setHookIdx] = useState(0);
   const [input, setInput] = useState("");
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -55,7 +57,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
     }
   }, []);
 
-  // ── Proactive welcome teaser (once per session, only if never opened) ──────
+  // ── Proactive launcher card (once per session, only if never opened) ───────
   useEffect(() => {
     if (!mounted) return;
     let seen = false;
@@ -65,13 +67,25 @@ export function ChatWidget({ locale }: { locale: Locale }) {
       /* noop */
     }
     if (seen || open) return;
-    const id = window.setTimeout(() => setTeaser(true), TEASER_DELAY);
+    const id = window.setTimeout(() => setCard(true), CARD_DELAY);
     return () => window.clearTimeout(id);
   }, [mounted, open]);
 
+  // ── Rotate the motivational hook while the card is showing ─────────────────
+  useEffect(() => {
+    if (!card || open) return;
+    const hooks = w.hooks;
+    if (!hooks || hooks.length < 2) return;
+    const id = window.setInterval(
+      () => setHookIdx((i) => (i + 1) % hooks.length),
+      HOOK_INTERVAL,
+    );
+    return () => window.clearInterval(id);
+  }, [card, open, w.hooks]);
+
   const openPanel = useCallback(() => {
     setOpen(true);
-    setTeaser(false);
+    setCard(false);
     try {
       window.sessionStorage.setItem(OPEN_KEY, "1");
       window.sessionStorage.setItem(SEEN_KEY, "1");
@@ -89,8 +103,8 @@ export function ChatWidget({ locale }: { locale: Locale }) {
     }
   }, []);
 
-  const dismissTeaser = useCallback(() => {
-    setTeaser(false);
+  const dismissCard = useCallback(() => {
+    setCard(false);
     try {
       window.sessionStorage.setItem(SEEN_KEY, "1");
     } catch {
@@ -262,28 +276,49 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         )}
       </div>
 
-      {/* ── Proactive teaser bubble (branded) ────────────────────────────────── */}
-      {teaser && !open && (
-        <button type="button" className="fe-cw-teaser" onClick={openPanel}>
-          <span className="fe-cw-teaser-avatar" aria-hidden="true">
+      {/* ── Proactive launcher card — animated, motivating invite ────────────── */}
+      {card && !open && (
+        <div
+          className="fe-cw-card"
+          role="button"
+          tabIndex={0}
+          aria-label={w.openAria}
+          onClick={openPanel}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              openPanel();
+            }
+          }}
+        >
+          <span className="fe-cw-card-avatar" aria-hidden="true">
             <img src={monogram} alt="" />
+            <span className="fe-cw-card-dot" />
           </span>
-          <span className="fe-cw-teaser-text">{w.welcome.split("\n")[0]}</span>
+          <span className="fe-cw-card-body">
+            <span key={hookIdx} className="fe-cw-card-hook">
+              {w.hooks[hookIdx % w.hooks.length]}
+            </span>
+            <span className="fe-cw-card-sub">
+              <span className="dot" aria-hidden="true" />
+              {w.subtitle}
+            </span>
+          </span>
           <span
-            className="fe-cw-teaser-close"
+            className="fe-cw-card-close"
             role="button"
             aria-label={w.closeAria}
             onClick={(e) => {
               e.stopPropagation();
-              dismissTeaser();
+              dismissCard();
             }}
           >
-            <X size={12} />
+            <X size={13} />
           </span>
-        </button>
+        </div>
       )}
 
-      {/* ── Launcher FAB — Future Earth monogram ─────────────────────────────── */}
+      {/* ── Launcher FAB — AI chat icon ──────────────────────────────────────── */}
       <button
         type="button"
         className="fe-cw-fab"
@@ -292,16 +327,12 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         aria-expanded={open}
       >
         {open ? (
-          <span className="fe-cw-fab-chevron">
-            <ChevronDown size={26} />
-          </span>
+          <ChevronDown size={26} className="fe-cw-fab-ic" />
         ) : (
-          <span className="fe-cw-fab-mono">
-            <img src={monogram} alt="" />
-          </span>
+          <MessageSquareText size={25} className="fe-cw-fab-ic" />
         )}
         {!open && !chat.hasEngaged && <span className="fe-cw-fab-pulse" aria-hidden="true" />}
-        {!open && teaser && <span className="fe-cw-fab-badge" aria-hidden="true" />}
+        {!open && card && <span className="fe-cw-fab-badge" aria-hidden="true" />}
       </button>
     </div>
   );

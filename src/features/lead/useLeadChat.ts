@@ -119,6 +119,22 @@ export function useLeadChat(locale: Locale): UseLeadChat {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ── Keep the greeting in the site's current language ────────────────────────
+  // The widget lives at the app root and never remounts on client-side route
+  // changes, so switching the language toggle only updates the `locale` prop —
+  // it doesn't touch the already-seeded welcome message. Re-seed it whenever
+  // the visitor hasn't engaged yet (nothing lost, since it's still just the
+  // opening line), so the greeting always matches the page's language.
+  useEffect(() => {
+    if (!hydrated) return;
+    setMessages((prev) => {
+      if (prev.length !== 1 || prev[0].role !== "assistant") return prev;
+      const freshWelcome = chatWidget[locale].welcome;
+      if (prev[0].content === freshWelcome) return prev;
+      return [{ role: "assistant", content: freshWelcome, at: now() }];
+    });
+  }, [locale, hydrated]);
+
   // ── Persist on change (after hydration, so we don't clobber saved state) ───
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
