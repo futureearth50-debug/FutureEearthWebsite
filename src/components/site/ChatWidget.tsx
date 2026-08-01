@@ -10,8 +10,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { MessageSquareText, X, ChevronDown, RotateCcw, Sparkles } from "lucide-react";
-import { chatWidget, leadAssistant, type Locale } from "@/content/site";
+import { X, ChevronDown, RotateCcw } from "lucide-react";
+import { chatWidget, brand, leadAssistant, type Locale } from "@/content/site";
+import monogram from "@/assets/brand/future-earth-monogram.png";
 import { useLeadChat } from "@/features/lead/useLeadChat";
 import {
   MessageRow,
@@ -30,6 +31,7 @@ const TEASER_DELAY = 6000;
 export function ChatWidget({ locale }: { locale: Locale }) {
   const isRtl = locale === "ar";
   const w = chatWidget[locale];
+  const b = brand[locale];
   const t = leadAssistant[locale];
   const chat = useLeadChat(locale);
 
@@ -38,6 +40,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   const [teaser, setTeaser] = useState(false);
   const [input, setInput] = useState("");
 
+  const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputWrapRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -117,6 +120,43 @@ export function ChatWidget({ locale }: { locale: Locale }) {
     };
   }, [open, closePanel]);
 
+  // ── Mobile keyboard safety ─────────────────────────────────────────────────
+  // Track the visual viewport so the full-screen sheet fills exactly the visible
+  // area above the on-screen keyboard — the composer is never cut off. `100dvh`
+  // is the CSS fallback when visualViewport is unavailable.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    const root = rootRef.current;
+    if (!vv || !root) return;
+    const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
+    const apply = () => {
+      if (open && isMobile()) {
+        root.style.setProperty("--fe-cw-h", `${Math.round(vv.height)}px`);
+        root.style.setProperty("--fe-cw-top", `${Math.round(vv.offsetTop)}px`);
+      } else {
+        root.style.removeProperty("--fe-cw-h");
+        root.style.removeProperty("--fe-cw-top");
+      }
+    };
+    apply();
+    vv.addEventListener("resize", apply);
+    vv.addEventListener("scroll", apply);
+    return () => {
+      vv.removeEventListener("resize", apply);
+      vv.removeEventListener("scroll", apply);
+    };
+  }, [open]);
+
+  // Lock background scroll while the full-screen sheet is open on mobile.
+  useEffect(() => {
+    if (!open || !window.matchMedia("(max-width: 640px)").matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const submit = useCallback(() => {
     chat.send(input);
     setInput("");
@@ -128,7 +168,12 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   const composerDisabled = chat.busy || chat.phase !== "chat";
 
   return (
-    <div className={`fe-cw ${isRtl ? "rtl" : "ltr"}`} dir={isRtl ? "rtl" : "ltr"} data-open={open}>
+    <div
+      ref={rootRef}
+      className={`fe-cw ${isRtl ? "rtl" : "ltr"}`}
+      dir={isRtl ? "rtl" : "ltr"}
+      data-open={open}
+    >
       {/* ── Panel ─────────────────────────────────────────────────────────── */}
       <div
         ref={panelRef}
@@ -137,21 +182,19 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         aria-label={w.title}
         aria-hidden={!open}
       >
-        {/* Header */}
+        {/* Header — Future Earth brand identity */}
         <div className="fe-cw-head">
-          <span className="fe-la-avatar">
-            <Sparkles size={20} />
+          <span className="fe-cw-avatar">
+            <img src={monogram} alt={b.name} />
+            <span className="fe-cw-avatar-dot" aria-hidden="true" />
           </span>
-          <div className="flex-1 min-w-0">
-            <div className="fe-cw-head-title">{w.title}</div>
+          <div className="fe-cw-head-brand">
+            <div className="fe-cw-head-title">{b.name}</div>
             <div className="fe-cw-head-sub">
               {chat.busy && chat.phase === "chat" ? (
                 <span>{t.statusTyping}</span>
               ) : (
-                <>
-                  <span className="fe-la-dot" />
-                  <span>{w.subtitle}</span>
-                </>
+                <span>{w.title}</span>
               )}
             </div>
           </div>
@@ -208,16 +251,24 @@ export function ChatWidget({ locale }: { locale: Locale }) {
               onSend={submit}
             />
             <div className="fe-cw-disclaimer">
-              <Sparkles size={11} style={{ color: "var(--fe-amber-deep)" }} />
+              <img
+                src={monogram}
+                alt=""
+                style={{ width: 13, height: 13, objectFit: "contain", opacity: 0.75 }}
+              />
               {t.disclaimer}
             </div>
           </div>
         )}
       </div>
 
-      {/* ── Proactive teaser bubble ──────────────────────────────────────────── */}
+      {/* ── Proactive teaser bubble (branded) ────────────────────────────────── */}
       {teaser && !open && (
         <button type="button" className="fe-cw-teaser" onClick={openPanel}>
+          <span className="fe-cw-teaser-avatar" aria-hidden="true">
+            <img src={monogram} alt="" />
+          </span>
+          <span className="fe-cw-teaser-text">{w.welcome.split("\n")[0]}</span>
           <span
             className="fe-cw-teaser-close"
             role="button"
@@ -229,11 +280,10 @@ export function ChatWidget({ locale }: { locale: Locale }) {
           >
             <X size={12} />
           </span>
-          <span className="fe-cw-teaser-text">{w.welcome.split("\n")[0]}</span>
         </button>
       )}
 
-      {/* ── Launcher FAB ─────────────────────────────────────────────────────── */}
+      {/* ── Launcher FAB — Future Earth monogram ─────────────────────────────── */}
       <button
         type="button"
         className="fe-cw-fab"
@@ -241,10 +291,17 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         aria-label={open ? w.closeAria : w.openAria}
         aria-expanded={open}
       >
-        <span className="fe-cw-fab-icon">
-          {open ? <ChevronDown size={24} /> : <MessageSquareText size={23} />}
-        </span>
+        {open ? (
+          <span className="fe-cw-fab-chevron">
+            <ChevronDown size={26} />
+          </span>
+        ) : (
+          <span className="fe-cw-fab-mono">
+            <img src={monogram} alt="" />
+          </span>
+        )}
         {!open && !chat.hasEngaged && <span className="fe-cw-fab-pulse" aria-hidden="true" />}
+        {!open && teaser && <span className="fe-cw-fab-badge" aria-hidden="true" />}
       </button>
     </div>
   );

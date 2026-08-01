@@ -3,8 +3,9 @@
 // widget and the Contact-page panel so the two never diverge.
 
 import { useRef } from "react";
-import { Sparkles, TrendingUp, AlertCircle, RotateCcw, Send } from "lucide-react";
+import { TrendingUp, AlertCircle, RotateCcw, Send } from "lucide-react";
 import { leadAssistant, chatWidget, type Locale } from "@/content/site";
+import monogram from "@/assets/brand/future-earth-monogram.png";
 
 /** Locale-aware short time label with a "just now" grace window. */
 export function formatTime(at: number, locale: Locale): string {
@@ -20,10 +21,10 @@ export function formatTime(at: number, locale: Locale): string {
   }
 }
 
-export function BotAvatar({ size = 14 }: { size?: number }) {
+export function BotAvatar() {
   return (
-    <span className="fe-la-mini">
-      <Sparkles size={size} />
+    <span className="fe-la-mini fe-cw-botavatar">
+      <img src={monogram} alt="Future Earth" />
     </span>
   );
 }

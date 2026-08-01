@@ -179,7 +179,10 @@ export function useLeadChat(locale: Locale): UseLeadChat {
           data: { locale, messages: history.map(toServer) },
         })) as unknown as Response;
 
-        if (!res.ok) throw new Error(`Chat stream failed: ${res.status}`);
+        if (!res.ok) {
+          const errText = await res.text().catch(() => `HTTP ${res.status}`);
+          throw new Error(`Chat stream failed: ${errText}`);
+        }
 
         const full = await readTextStream(res, (partial) => setStreaming(stripMarker(partial)));
         const visible = stripMarker(full);

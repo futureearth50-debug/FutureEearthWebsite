@@ -96,10 +96,11 @@ export async function streamAssistantReply(
   try {
     source = await streamText(system + wrapUp, turns, { temperature: 0.7, maxOutputTokens: 640 });
   } catch (err) {
-    console.error("[lead-engine] failed to start AI stream:", err);
-    return new Response("", {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[lead-engine] failed to start AI stream:", msg);
+    return new Response(JSON.stringify({ error: msg }), {
       status: 502,
-      headers: { "content-type": "text/plain; charset=utf-8" },
+      headers: { "content-type": "application/json; charset=utf-8" },
     });
   }
   const encoder = new TextEncoder();
