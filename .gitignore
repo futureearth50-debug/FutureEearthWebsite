@@ -18,6 +18,9 @@ dist-ssr
 
 # Wrangler / Cloudflare
 .wrangler/
+
+# Vercel CLI (local project link + build output)
+.vercel
 .dev.vars
 
 # Environment secrets

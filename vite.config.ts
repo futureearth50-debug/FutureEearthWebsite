@@ -12,4 +12,7 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Without this, nitro defaults to a Cloudflare Workers build — `vercel deploy`
+  // against that output would not produce a working server.
+  nitro: { preset: "vercel" },
 });

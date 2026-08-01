@@ -6,7 +6,7 @@
 // no I/O, no provider logic (that lives in email.ts).
 
 import type { Locale } from "@/content/site";
-import type { ChatMessage, LeadAnalysis, LeadMeta } from "@/features/lead/types";
+import type { ChatMessage, LeadAnalysis, LeadMeta, LeadProfile } from "@/features/lead/types";
 
 const BRAND = {
   navy: "#0A1B2E",
@@ -62,6 +62,35 @@ function deviceInfo(ua?: string): string {
     /linux/i.test(ua) ? "Linux" : "";
   const kind = /mobile|iphone|android/i.test(ua) ? "Mobile" : "Desktop";
   return `${browser}${os ? " on " + os : ""} · ${kind}`;
+}
+
+/** International phone digits for `tel:`/`wa.me` links, or undefined if the
+ *  model-extracted text doesn't look like a usable number. */
+function digitsOnly(phone?: string): string | undefined {
+  const d = (phone ?? "").replace(/\D/g, "");
+  return d.length >= 8 ? d : undefined;
+}
+
+/** One-click action row (Call / WhatsApp / Email) so the sales rep can respond
+ *  straight from the inbox instead of hunting for the number in the body. */
+function ctaBar(p: LeadProfile): string {
+  const phone = digitsOnly(p.phone);
+  const btn = (href: string, label: string, bg: string, fg: string) => `
+      <td style="padding:0 6px 0 0;">
+        <a href="${esc(href)}" style="display:inline-block;background:${bg};color:${fg};font-size:13px;font-weight:700;text-decoration:none;padding:10px 16px;border-radius:8px;white-space:nowrap;">${esc(label)}</a>
+      </td>`;
+  const buttons = [
+    phone ? btn(`tel:+${phone}`, "📞 Call", BRAND.amber, BRAND.navy) : "",
+    phone ? btn(`https://wa.me/${phone}`, "💬 WhatsApp", "#17976A", "#ffffff") : "",
+    p.email ? btn(`mailto:${p.email}`, "✉️ Email", BRAND.navy, "#ffffff") : "",
+  ]
+    .filter(Boolean)
+    .join("");
+  if (!buttons) return "";
+  return `
+      <tr><td style="padding:16px 24px 0;">
+        <table role="presentation" cellpadding="0" cellspacing="0"><tr>${buttons}</tr></table>
+      </td></tr>`;
 }
 
 const rowsFor = (pairs: [string, string | undefined][]) =>
@@ -188,6 +217,14 @@ export function buildLeadEmail(input: EmailInput): { subject: string; html: stri
             </td>
           </tr></table>
         </td></tr>
+
+        <!-- Quick actions -->
+        ${ctaBar(p)}
+        ${
+          analysis.qualification === "Hot"
+            ? `<tr><td style="padding:14px 24px 0;"><div style="background:${TIER.Hot.bg};color:${TIER.Hot.color};font-size:12px;font-weight:600;padding:9px 12px;border-radius:8px;">🔥 Hot lead — reach out within the hour for the best chance to close.</div></td></tr>`
+            : ""
+        }
 
         <!-- Customer -->
         ${customer ? `<tr><td style="padding:22px 24px 4px;">${sectionTitle("Customer Information")}<table role="presentation" width="100%">${customer}</table></td></tr>` : ""}

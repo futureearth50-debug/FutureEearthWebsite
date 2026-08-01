@@ -7,7 +7,7 @@
 //
 //   EMAIL_PROVIDER = log | resend | web3forms | webhook   (default log)
 //   EMAIL_TO       = contact@fe-ksa.com                   (destination)
-//   EMAIL_MIN_SCORE= 80                                   (only email leads ≥ this)
+//   EMAIL_MIN_SCORE= 50                                   (only email leads ≥ this)
 //
 // Providers & their keys:
 //   resend    → RESEND_API_KEY, EMAIL_FROM (verify fe-ksa.com in Resend to send
@@ -26,6 +26,9 @@ export interface EmailMessage {
   subject: string;
   html: string;
   text: string;
+  /** The lead's own email, when known — set as Reply-To so hitting "Reply" in
+   *  the inbox goes straight to the customer, not back to the AI's from address. */
+  replyTo?: string;
 }
 
 export interface EmailResult {
@@ -71,6 +74,7 @@ class ResendProvider implements EmailProvider {
         subject: message.subject,
         html: message.html,
         text: message.text,
+        ...(message.replyTo ? { reply_to: message.replyTo } : {}),
       }),
     });
     const data = await safeJson(res);
@@ -141,10 +145,10 @@ function resolveProvider(): EmailProvider {
   }
 }
 
-/** Minimum score that triggers an email (configurable; default 80). */
+/** Minimum score that triggers an email (configurable; default 50). */
 function minScore(): number {
-  const n = Number(env("EMAIL_MIN_SCORE", "80"));
-  return Number.isFinite(n) ? n : 80;
+  const n = Number(env("EMAIL_MIN_SCORE", "50"));
+  return Number.isFinite(n) ? n : 50;
 }
 
 /**
@@ -158,8 +162,9 @@ export async function notifyLeadEmail(input: EmailInput): Promise<EmailResult> {
   const to = env("EMAIL_TO", DEFAULT_TO);
   const provider = resolveProvider();
   const { subject, html, text } = buildLeadEmail(input);
+  const replyTo = input.analysis.profile.email;
   try {
-    const result = await provider.send({ to, subject, html, text });
+    const result = await provider.send({ to, subject, html, text, replyTo });
     if (!result.ok) console.error(`[email:${provider.name}] send failed:`, result.error);
     return result;
   } catch (err) {
