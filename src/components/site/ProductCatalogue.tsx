@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { gsap } from "gsap";
 import { ArrowRight, Layers3, Server, PlayCircle, FileText, Maximize2, X, Boxes } from "lucide-react";
 import { products, type Locale } from "@/content/site";
@@ -11,6 +11,11 @@ import l1Img from "@/assets/products/sav-l1-cabinet.png";
 import s1Img from "@/assets/products/sav-s1-cabinet.png";
 import s1Spec from "@/assets/products/sav-s1-specsheet.png";
 import hybridScene from "@/assets/products/sav-applications.jpg";
+import p600Img from "@/assets/products/600W/600 Front 1.png";
+import p1200Img from "@/assets/products/1200W/1200 Front.png";
+import p2400Img from "@/assets/products/2400W/2400 Front 1.png";
+import unitsImg from "@/assets/products/units.png";
+import rackImg from "@/assets/products/rooftop-product.png";
 
 type CatalogueItem = (typeof products)["en"]["catalogue"][number];
 
@@ -25,9 +30,12 @@ type AssetDef = {
 const ASSETS: Record<string, AssetDef> = {
   l1: { img: l1Img, video: "/media/sav-l1-product.mp4" },
   s1: { img: s1Img, specImg: s1Spec },
-  stackable: { icon: Layers3 },
-  rack: { icon: Server },
+  stackable: { img: unitsImg },
+  rack: { img: rackImg, cover: true },
   hybrid: { img: hybridScene, cover: true },
+  p600: { img: p600Img },
+  p1200: { img: p1200Img },
+  p2400: { img: p2400Img },
 };
 
 export function ProductCatalogue({ locale }: { locale: Locale }) {
@@ -41,6 +49,16 @@ export function ProductCatalogue({ locale }: { locale: Locale }) {
 
   const gridRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Header dropdown links here as /products#<category-id> — jump the filter
+  // to match whenever that hash is present or changes.
+  const hash = useRouterState({ select: (s) => s.location.hash });
+  useEffect(() => {
+    if (!hash || !c.categories.some((cat) => cat.id === hash)) return;
+    setActive(hash);
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [hash, c.categories]);
 
   const filtered = useMemo(
     () => (active === "all" ? c.catalogue : c.catalogue.filter((p) => p.category === active)),
@@ -113,7 +131,7 @@ export function ProductCatalogue({ locale }: { locale: Locale }) {
   };
 
   return (
-    <section className="fe-section" style={{ background: "var(--fe-cloud)" }}>
+    <section ref={sectionRef} className="fe-section" style={{ background: "var(--fe-cloud)" }}>
       <div className="fe-container">
         <div className="max-w-3xl">
           <Reveal><div className="fe-eyebrow">{c.catalogueEyebrow}</div></Reveal>

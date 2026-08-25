@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, Globe, ArrowRight, ChevronDown } from "lucide-react";
-import { nav, ui, solar, type Locale, type NavItem } from "@/content/site";
+import { nav, ui, solar, products, type Locale, type NavItem } from "@/content/site";
 import { Brand } from "./Brand";
 
 /** Route alone is not unique — anchor links reuse a page's route. */
@@ -14,16 +14,27 @@ export function Header({ locale }: { locale: Locale }) {
   const isRtl = locale === "ar";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [subOpen, setSubOpen] = useState(false);
+  const [openSub, setOpenSub] = useState<string | null>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   const solarBase = isRtl ? "/ar/solar-solutions" : "/solar-solutions";
+  const productsBase = isRtl ? "/ar/products" : "/products";
   const solarSubs = solar[locale].parts.map((p) => ({
     to: `${solarBase}/${p.slug}`,
+    hash: undefined as string | undefined,
     label: p.navLabel,
-    short: p.short,
+    short: p.short as string | undefined,
     no: p.no,
   }));
+  const productSubs = products[locale].categories
+    .filter((cat) => cat.id !== "all")
+    .map((cat, i) => ({
+      to: productsBase,
+      hash: cat.id as string | undefined,
+      label: cat.label,
+      short: undefined as string | undefined,
+      no: String(i + 1).padStart(2, "0"),
+    }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -32,7 +43,7 @@ export function Header({ locale }: { locale: Locale }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); setSubOpen(false); }, [pathname]);
+  useEffect(() => { setOpen(false); setOpenSub(null); }, [pathname]);
 
   return (
     <header
@@ -51,11 +62,12 @@ export function Header({ locale }: { locale: Locale }) {
             that the drawer carries the full nav rather than clipping it. */}
         <nav className="hidden xl:flex items-center gap-6">
           {items.map((n) => {
-            const hasSub = n.to === solarBase;
+            const hasSub = n.to === solarBase || n.to === productsBase;
+            const subs = n.to === solarBase ? solarSubs : n.to === productsBase ? productSubs : [];
             // Anchor links (e.g. Our Projects → #track-record) share a route with
             // Home, so they must never claim the active state from it.
             const active = hasSub
-              ? pathname.startsWith(solarBase)
+              ? pathname.startsWith(n.to as string)
               : !n.hash && pathname === n.to;
 
             const link = (
@@ -80,12 +92,12 @@ export function Header({ locale }: { locale: Locale }) {
               <div key={navKey(n)} className="fe-navdrop">
                 {link}
                 <div className="fe-navdrop-panel">
-                  {solarSubs.map((s) => (
-                    <Link key={s.to} to={s.to as string} className="fe-navdrop-item">
+                  {subs.map((s) => (
+                    <Link key={`${s.to}#${s.hash ?? ""}`} to={s.to as string} hash={s.hash} className="fe-navdrop-item">
                       <span className="fe-index fe-navdrop-no">{s.no}</span>
                       <span>
                         <span className="fe-navdrop-label fe-display">{s.label}</span>
-                        <span className="fe-navdrop-desc">{s.short}</span>
+                        {s.short && <span className="fe-navdrop-desc">{s.short}</span>}
                       </span>
                       <ArrowRight size={15} className="fe-flip-x fe-navdrop-arrow" />
                     </Link>
@@ -116,7 +128,9 @@ export function Header({ locale }: { locale: Locale }) {
         <div className="xl:hidden fe-blueprint-dark" style={{ background: "var(--fe-navy)", borderTop: "1px solid rgba(143,180,214,0.12)", maxHeight: "calc(100vh - 78px)", overflowY: "auto" }}>
           <div className="fe-container py-7 flex flex-col gap-1">
             {items.map((n, i) => {
-              const hasSub = n.to === solarBase;
+              const hasSub = n.to === solarBase || n.to === productsBase;
+              const subs = n.to === solarBase ? solarSubs : n.to === productsBase ? productSubs : [];
+              const isOpen = openSub === navKey(n);
               return (
                 <div key={navKey(n)} className="border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
                   <div className="flex items-center justify-between">
@@ -125,25 +139,26 @@ export function Header({ locale }: { locale: Locale }) {
                     </Link>
                     {hasSub ? (
                       <button
-                        onClick={() => setSubOpen(!subOpen)}
+                        onClick={() => setOpenSub(isOpen ? null : navKey(n))}
                         aria-label={n.label}
-                        aria-expanded={subOpen}
+                        aria-expanded={isOpen}
                         className="p-3 -me-3"
                         style={{ color: "var(--fe-steel)" }}
                       >
-                        <ChevronDown size={18} style={{ transform: subOpen ? "rotate(180deg)" : undefined, transition: "transform 0.35s var(--fe-ease)" }} />
+                        <ChevronDown size={18} style={{ transform: isOpen ? "rotate(180deg)" : undefined, transition: "transform 0.35s var(--fe-ease)" }} />
                       </button>
                     ) : (
                       <span className="fe-index" style={{ fontSize: 12, color: "var(--fe-steel-2)" }}>0{i + 1}</span>
                     )}
                   </div>
 
-                  {hasSub && subOpen && (
+                  {hasSub && isOpen && (
                     <div className="pb-3 flex flex-col gap-1">
-                      {solarSubs.map((s) => (
+                      {subs.map((s) => (
                         <Link
-                          key={s.to}
+                          key={`${s.to}#${s.hash ?? ""}`}
                           to={s.to as string}
+                          hash={s.hash}
                           className="flex items-center gap-3 py-2.5 ps-4 rounded-lg"
                           style={{ color: "rgba(255,255,255,0.78)", borderInlineStart: "2px solid rgba(143,180,214,0.25)" }}
                         >

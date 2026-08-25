@@ -155,9 +155,12 @@ Part 1: Executive Message & Strategic Alignment (الرسالة التنفيذي
 دمج رسالة رئيس مجلس الإدارة مباشرة مع الأهداف الإستراتيجية لرؤية السعودية 2030 في قطاع الطاقة النظيفة. نبرز هنا حجم خبرة الشركة والتزام المنشأة بنقل المعرفة الفنية وتوطين التقنيات الهندسية لقطاع الأعمال السعودي. 
 نصوص المحتوى بالإنجليزية:
 Section Headline:
-Solar Energy Aligned with Saudi Vision 2030
+Energy Solutions Aligned with the Kingdom's Vision 2030
 Executive Statement Text:
- Our Kingdom has an abundance of sunshine and our primary objective is to deliver advanced solar energy networks that make strong financial sense for enterprise operations the environment and the future. Producing energy from the sun is now highly cost effective delivering immediate predictable utilities savings to commercial and industrial users with short investment payback periods. As the cost of traditional fueled energy sources increases a localized solar infrastructure provides verified energy independence for Saudi Arabia. 
+ At Future Earth Energy Systems, we deliver integrated renewable energy solutions that combine engineering expertise with modern technology to meet facility requirements and achieve the highest levels of efficiency and reliability.
+ We design and implement energy solutions from studies and design through procurement and installation to operation and maintenance, with a focus on reducing energy costs, improving operational efficiency, and delivering a sustainable return on investment for our clients.
+ We believe the success of energy projects depends not on technology alone, but on understanding the client's needs and delivering solutions engineered to the site's requirements and load profile, all while upholding the highest standards of quality, safety, and engineering best practice.
+ Drawing on our experience in the Saudi market and our specialized team, we strive to build long-term partnerships and deliver dependable solutions that advance the energy sector and support the objectives of Saudi Vision 2030, toward a more sustainable and efficient future. 
 Corporate Legacy & Local Knowledge Transfer:
  Future Earth is backed by a highly skilled team of engineers and technicians delivering certified expertise to the Saudi renewable energy sector. Fully committed to local knowledge transfer we engineer small and large scale solar configurations and complex hybrid networks using premium components to enforce the highest standards of architectural design and long term system deployment. 
 

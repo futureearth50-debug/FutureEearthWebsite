@@ -5,7 +5,6 @@ import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CTARibbon } from "@/components/site/Sections";
 import { LogoWall } from "@/components/site/LogoWall";
 import { Credentials } from "@/components/site/Credentials";
-import chairmanImg from "@/assets/brand/chairman-portrait.webp";
 import heroImg from "@/assets/projects/ground-mount-desert.webp";
 import vision2030 from "@/assets/certificates/saudi-vision-2030.png";
 
@@ -32,7 +31,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
             <Reveal>
               <div className="lg:sticky lg:top-28">
                 <div className="fe-frame fe-ticks" style={{ aspectRatio: "4/5", borderRadius: "var(--fe-r-lg)" }}>
-                  <img src={chairmanImg} alt="Chairman of the Board, Future Earth Energy Systems" loading="lazy" />
+                  <img src="/manger.png" alt="Chairman of the Board, Future Earth Energy Systems" loading="lazy" />
                   <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, transparent, rgba(10,27,46,0.9))" }}>
                     <div className="fe-display" style={{ color: "white", fontWeight: 600, fontSize: "1.05rem" }}>{isRtl ? "رئيس مجلس الإدارة" : "Chairman of the Board"}</div>
                     <div className="fe-mono mt-1" style={{ color: "var(--fe-steel)", fontSize: 11.5, letterSpacing: "0.08em" }}>Future Earth Energy Systems</div>
@@ -52,14 +51,10 @@ export function AboutPage({ locale }: { locale: Locale }) {
                 <Quote size={40} style={{ color: "var(--fe-amber)", marginTop: 18 }} className="fe-flip-x" />
               </Reveal>
               <Reveal delay={0.15}>
-                <p className="fe-display mt-4" style={{ fontSize: "clamp(1.25rem,2vw,1.75rem)", lineHeight: 1.45, fontWeight: 500, color: "var(--fe-navy)", letterSpacing: "-0.01em" }}>
-                  {c.executiveStatement}
-                </p>
-              </Reveal>
-              <Reveal delay={0.25}>
-                <div className="mt-10 pt-8" style={{ borderTop: "1px solid var(--fe-line)" }}>
-                  <h3 className="fe-display" style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--fe-navy)" }}>{c.legacyTitle}</h3>
-                  <p className="fe-lead mt-4">{c.legacy}</p>
+                <div className="fe-display mt-4" style={{ fontSize: "clamp(1.25rem,2vw,1.75rem)", lineHeight: 1.45, fontWeight: 500, color: "var(--fe-navy)", letterSpacing: "-0.01em" }}>
+                  {c.executiveStatement.map((p, i) => (
+                    <p key={i} className={i > 0 ? "mt-5" : undefined}>{p}</p>
+                  ))}
                 </div>
               </Reveal>
             </div>
