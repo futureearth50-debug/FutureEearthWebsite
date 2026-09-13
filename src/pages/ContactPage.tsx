@@ -22,7 +22,7 @@ export function ContactPage({ locale }: { locale: Locale }) {
     {
       icon: Phone,
       label: c.phoneLabel,
-      value: contactInfo.phoneDisplay,
+      value: `${contactInfo.phoneDisplay} · ${contactInfo.phoneAltDisplay}`,
       href: `tel:${contactInfo.phone}`,
       ltr: true,
     },

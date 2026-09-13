@@ -49,7 +49,7 @@ export const contactInfo = {
   phoneAlt: "+966569757575",
   phoneAltDisplay: "+966 569 757575",
   email: "contact@fe-ksa.com",
-  whatsapp: "966118108828",
+  whatsapp: "966569757575",
   hours: {
     en: "Sunday to Thursday · 09:00 AM to 05:00 PM · Friday and Saturday Closed",
     ar: "من الأحد إلى الخميس · 09:00 صباحاً حتى 05:00 مساءً · الجمعة والسبت مغلق",
