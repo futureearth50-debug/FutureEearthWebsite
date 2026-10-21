@@ -11,7 +11,7 @@ import { getLenis } from "@/lib/motion";
 
 import heroImg from "@/assets/projects/rooftop-array-complex.webp";
 import heroShowcaseImg from "@/assets/projects/ground-mount-desert.webp";
-import villageImg from "@/assets/projects/rooftop-array-inspection.webp";
+import villageImg from "@/assets/projects/village-mall.jpeg";
 import munajemImg from "@/assets/projects/rooftop-panel-install.webp";
 import dewaImg from "@/assets/projects/solar-substation-grid.webp";
 import railImg from "@/assets/projects/rooftop-rail-sealing.webp";

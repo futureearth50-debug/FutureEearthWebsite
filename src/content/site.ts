@@ -119,7 +119,7 @@ export const home = {
     projects: [
       {
         capacity: "1.7 MW",
-        title: "The Village Mall — Jeddah",
+        title: "The Village Mall — Mohammad Al Habib Co. — Jeddah",
         body: "Engineering supply and full commissioning of a 1702 kWp rooftop solar infrastructure.",
       },
       {
@@ -201,8 +201,8 @@ export const home = {
     projects: [
       {
         capacity: "1.7 ميجاواط",
-        title: "ذا فيلج مول — جدة",
-        body: "التوريد الهندسي والتشغيل الكامل لبنية تحتية للطاقة الشمسية فوق الأسطح بقدرة 1702 كيلوواط ذروة.",
+        title: "ذا فيلج مول — شركة محمد الحبيب — جدة",
+        body: "التصميم الهندسي والتوريد والتركيب والتشغيل لنظام الطاقة الشمسية بقدرة 1702 كيلوواط ذروة.",
       },
       {
         capacity: "1.3 ميجاواط",
